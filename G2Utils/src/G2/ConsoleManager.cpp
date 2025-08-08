@@ -9,7 +9,7 @@
 
 SINGLETON_IMPL(ConsoleManager);
 
-#define CONSOLE_WINDOW() static_cast<HWND>(this->s_console)
+#define CONSOLE_WINDOW() static_cast<HWND>(this->m_console)
 
 BOOL WINAPI ConsoleCtrlHandler(DWORD dwCtrlType) {
   switch (dwCtrlType) {
@@ -32,7 +32,7 @@ auto ConsoleManager::init_singleton() -> void {
   std::freopen("CONOUT$", "w", stdout);
   std::freopen("CONOUT$", "w", stderr);
   std::freopen("CONIN$", "r", stdin);
-  this->s_console = GetConsoleWindow();
+  this->m_console = GetConsoleWindow();
 
   // Override close button
   SetConsoleCtrlHandler(ConsoleCtrlHandler, TRUE);
@@ -42,20 +42,20 @@ auto ConsoleManager::init_singleton() -> void {
 
 auto ConsoleManager::deinit_singleton() -> void {
   FreeConsole();
-  if (this->s_console == GetConsoleWindow() && IsWindow(CONSOLE_WINDOW())) {
+  if (this->m_console == GetConsoleWindow() && IsWindow(CONSOLE_WINDOW())) {
     PostMessage(CONSOLE_WINDOW(), WM_CLOSE, 0, 0);
-    while (this->s_console == GetConsoleWindow())
+    while (this->m_console == GetConsoleWindow())
       Sleep(100);
   }
-  this->s_console = nullptr;
+  this->m_console = nullptr;
 }
 
 auto ConsoleManager::show() -> void {
-  assert(this->s_console != nullptr);
+  assert(this->m_console != nullptr);
   ShowWindow(CONSOLE_WINDOW(), SW_SHOW);
 }
 
 auto ConsoleManager::hide() -> void {
-  assert(this->s_console != nullptr);
+  assert(this->m_console != nullptr);
   ShowWindow(CONSOLE_WINDOW(), SW_HIDE);
 }
