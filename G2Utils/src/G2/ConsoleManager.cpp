@@ -13,5 +13,15 @@ auto ConsoleManager::init_singleton() -> void {
   std::freopen("CONOUT$", "w", stderr);
   std::freopen("CONIN$", "r", stdin);
   this->s_console = GetConsoleWindow();
+  show();
+}
+
+auto ConsoleManager::show() -> void {
+  assert(this->s_console != nullptr);
   ShowWindow(static_cast<HWND>(this->s_console), SW_SHOW);
+}
+
+auto ConsoleManager::hide() -> void {
+  assert(this->s_console != nullptr);
+  ShowWindow(static_cast<HWND>(this->s_console), SW_HIDE);
 }

@@ -5,6 +5,10 @@
 class ConsoleManager final : public Singleton<ConsoleManager> {
   friend class Singleton<ConsoleManager>;
 
+public:
+  auto show() -> void;
+  auto hide() -> void;
+
 protected:
   auto init_singleton() -> void override;
 
