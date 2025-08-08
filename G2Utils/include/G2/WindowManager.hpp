@@ -5,14 +5,13 @@
 class WindowManager : public Singleton<WindowManager> {
   friend class Singleton<WindowManager>;
 
-// TODO: Figure out why this crashes
-// public:
-//   ~WindowManager();
-
 public:
   auto begin_frame() -> void;
   auto end_frame() -> void;
+
   auto exit_requested() -> bool;
+  auto request_exit() -> void;
+
   auto get_window_scale() -> float;
 
 protected:

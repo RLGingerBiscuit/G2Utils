@@ -1,4 +1,3 @@
-#include "spdlog/common.h"
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
@@ -23,16 +22,18 @@ static bool g_running = false;
 
 void init_loggers();
 
-DWORD WINAPI ThreadEntry(LPVOID lpParam) {
+void run() {
   ConsoleManager::init();
   defer(ConsoleManager::deinit());
-  WindowManager::init();
-  defer(WindowManager::deinit());
 
   init_loggers();
 
   spdlog::info("Hello from the dll pickle!");
 
+  WindowManager::init();
+  defer(WindowManager::deinit());
+
+  auto &console = ConsoleManager::instance();
   auto &window = WindowManager::instance();
 
   while (!window.exit_requested()) {
@@ -46,8 +47,24 @@ DWORD WINAPI ThreadEntry(LPVOID lpParam) {
 
     window.end_frame();
   }
+}
+
+DWORD WINAPI ThreadEntry(LPVOID lpParam) {
+  HMODULE local_module = 0;
+  GetModuleHandleEx(0, nullptr, &local_module);
+
+  SetThreadDescription(g_thread, L"G2Utils Thread");
+
+  run();
 
   spdlog::info("Exiting...");
+  spdlog::default_logger()->flush();
+  spdlog::shutdown();
+
+  g_thread = nullptr;
+  g_running = false;
+
+  FreeLibraryAndExitThread(local_module, EXIT_SUCCESS);
 
   return EXIT_SUCCESS;
 }
@@ -58,10 +75,6 @@ BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved) {
     g_running = true;
     g_thread =
         CreateThread(nullptr, 0, ThreadEntry, (LPVOID)hModule, 0, nullptr);
-  }; break;
-  case DLL_PROCESS_DETACH: {
-    TerminateThread(g_thread, EXIT_SUCCESS);
-    g_running = false;
   }; break;
   default:
     break;
@@ -83,8 +96,7 @@ void init_loggers() {
       "", spdlog::sinks_init_list{console_sink, file_sink});
   spdlog::set_default_logger(logger);
 
-  const auto log_filename = file_sink->calc_filename("logs/log.txt", 0);
-  const auto log_path = std::filesystem::canonical(log_filename);
+  const auto log_path = std::filesystem::canonical(file_sink->filename());
 
-  spdlog::info("Log path: '{}'", log_path.parent_path());
+  spdlog::info("Log path: '{}'", file_sink->filename());
 }

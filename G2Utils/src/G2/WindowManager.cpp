@@ -96,6 +96,10 @@ auto WindowManager::exit_requested() -> bool {
   return glfwWindowShouldClose(m_window);
 }
 
+auto WindowManager::request_exit() -> void {
+  glfwSetWindowShouldClose(m_window, true);
+}
+
 auto WindowManager::get_window_scale() -> float {
   return ImGui_ImplGlfw_GetContentScaleForMonitor(glfwGetPrimaryMonitor());
 }
