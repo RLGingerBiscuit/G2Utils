@@ -14,15 +14,6 @@ SINGLETON_IMPL(WindowManager);
 
 static void glfw_error_callback(int error, const char *desc) {}
 
-// WindowManager::~WindowManager() {
-//   ImGui_ImplOpenGL3_Shutdown();
-//   ImGui_ImplGlfw_Shutdown();
-//   ImGui::DestroyContext();
-
-//   glfwDestroyWindow(m_window);
-//   glfwTerminate();
-// }
-
 auto WindowManager::init_singleton() -> void {
   glfwSetErrorCallback(glfw_error_callback);
   if (!glfwInit()) {
@@ -68,6 +59,15 @@ auto WindowManager::init_singleton() -> void {
   ImGui_ImplOpenGL3_Init(glsl_version);
 
   spdlog::info("Initialised ImGui");
+}
+
+auto WindowManager::deinit_singleton() -> void {
+  ImGui_ImplOpenGL3_Shutdown();
+  ImGui_ImplGlfw_Shutdown();
+  ImGui::DestroyContext();
+
+  glfwDestroyWindow(m_window);
+  glfwTerminate();
 }
 
 auto WindowManager::begin_frame() -> void {

@@ -11,6 +11,7 @@ public:
 
 protected:
   auto init_singleton() -> void override;
+  auto deinit_singleton() -> void override;
 
 private:
   void *s_console;

@@ -15,23 +15,29 @@
   template <> std::unique_ptr<T> Singleton<T>::m_instance = nullptr;
 
 template <class T> class Singleton {
-public:
-  ~Singleton() = default;
-
 protected:
   Singleton() = default;
+  ~Singleton() = default;
 
+private:
   MAKE_NONCOPYABLE(Singleton);
   MAKE_NONMOVEABLE(Singleton);
 
 protected:
   virtual auto init_singleton() -> void = 0;
+  virtual auto deinit_singleton() -> void = 0;
 
 public:
   static auto init() -> void {
     assert(m_instance == nullptr);
     m_instance = std::make_unique<T>();
     m_instance.get()->init_singleton();
+  }
+
+  static auto deinit() -> void {
+    assert(m_instance != nullptr);
+    m_instance.get()->deinit_singleton();
+    m_instance = nullptr;
   }
 
   constexpr static auto instance() -> T & {

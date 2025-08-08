@@ -14,6 +14,7 @@
 
 #include "G2/ConsoleManager.hpp"
 #include "G2/WindowManager.hpp"
+#include "G2/defer.hpp"
 
 #define UNUSED(x) ((void)x);
 
@@ -24,6 +25,9 @@ void init_loggers();
 
 DWORD WINAPI ThreadEntry(LPVOID lpParam) {
   ConsoleManager::init();
+  defer(ConsoleManager::deinit());
+  WindowManager::init();
+  defer(WindowManager::deinit());
 
   init_loggers();
 
@@ -32,11 +36,13 @@ DWORD WINAPI ThreadEntry(LPVOID lpParam) {
   auto &window = WindowManager::instance();
 
   while (!window.exit_requested()) {
-    spdlog::info("Exit: {}", window.exit_requested());
-
     window.begin_frame();
 
-    ImGui::ShowDemoWindow();
+    if (ImGui::Begin("Utils")) {
+      if (ImGui::Button("Show Console"))
+        ConsoleManager::instance().show();
+    }
+    ImGui::End();
 
     window.end_frame();
   }
@@ -54,6 +60,7 @@ BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved) {
         CreateThread(nullptr, 0, ThreadEntry, (LPVOID)hModule, 0, nullptr);
   }; break;
   case DLL_PROCESS_DETACH: {
+    TerminateThread(g_thread, EXIT_SUCCESS);
     g_running = false;
   }; break;
   default:

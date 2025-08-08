@@ -13,7 +13,12 @@ auto ConsoleManager::init_singleton() -> void {
   std::freopen("CONOUT$", "w", stderr);
   std::freopen("CONIN$", "r", stdin);
   this->s_console = GetConsoleWindow();
-  show();
+  hide();
+}
+
+auto ConsoleManager::deinit_singleton() -> void {
+  FreeConsole();
+  this->s_console = nullptr;
 }
 
 auto ConsoleManager::show() -> void {
