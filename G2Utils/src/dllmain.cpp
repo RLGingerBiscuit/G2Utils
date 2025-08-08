@@ -13,6 +13,7 @@
 #include <imgui.h>
 
 #include "G2/ConsoleManager.hpp"
+#include "G2/WindowManager.hpp"
 
 #define UNUSED(x) ((void)x);
 
@@ -28,8 +29,19 @@ DWORD WINAPI ThreadEntry(LPVOID lpParam) {
 
   spdlog::info("Hello from the dll pickle!");
 
-  while (true) {
+  auto &window = WindowManager::instance();
+
+  while (!window.exit_requested()) {
+    spdlog::info("Exit: {}", window.exit_requested());
+
+    window.begin_frame();
+
+    ImGui::ShowDemoWindow();
+
+    window.end_frame();
   }
+
+  spdlog::info("Exiting...");
 
   return EXIT_SUCCESS;
 }

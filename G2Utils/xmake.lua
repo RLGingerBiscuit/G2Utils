@@ -10,6 +10,10 @@ local function common_stuff()
 
     add_links("user32.lib")
 
+    add_deps("glad", { private = true })
+    add_packages("opengl", "glfw", { private = true })
+    add_packages("imgui", { public = true })
+
     add_packages("spdlog")
 end
 
