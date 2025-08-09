@@ -11,6 +11,7 @@
 
 #include <imgui.h>
 
+#include "G2/ConfigManager.hpp"
 #include "G2/ConsoleManager.hpp"
 #include "G2/WindowManager.hpp"
 #include "G2/defer.hpp"
@@ -30,18 +31,26 @@ void run() {
 
   spdlog::info("Hello from the dll pickle!");
 
+  ConfigManager::init();
+  defer(ConfigManager::deinit());
+
   WindowManager::init();
   defer(WindowManager::deinit());
 
   auto &console = ConsoleManager::instance();
   auto &window = WindowManager::instance();
+  auto &config = ConfigManager::instance().config();
 
   while (!window.exit_requested()) {
     window.begin_frame();
 
     if (ImGui::Begin("Utils")) {
-      if (ImGui::Button("Show Console"))
-        ConsoleManager::instance().show();
+      if (ImGui::Checkbox("Console", &config.show_console)) {
+        if (config.show_console)
+          console.show();
+        else
+          console.hide();
+      }
     }
     ImGui::End();
 
