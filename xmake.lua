@@ -1,4 +1,5 @@
 add_rules("mode.debug", "mode.release")
+add_rules("plugin.compile_commands.autoupdate")
 
 set_allowedplats("windows")
 set_allowedarchs("x64")

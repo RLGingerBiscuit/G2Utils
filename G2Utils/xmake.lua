@@ -1,6 +1,6 @@
 local function common_stuff()
     set_kind("shared")
-    set_languages("cxxlatest")
+    set_languages("cxx23")
     set_exceptions("cxx")
 
     add_includedirs("include", { public = true })
