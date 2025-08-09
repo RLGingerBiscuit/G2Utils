@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <cstdint>
 
 #include "G2/ItemHandle.hpp"
 #include "G2/PlayerHandle.hpp"
@@ -35,6 +35,8 @@ class ItemManager final : public Singleton<ItemManager> {
 
 public:
   // auto get_item_info(ItemHandle handle) -> std::optional<ItemInfo>;
+
+  auto is_valid_item(ItemHandle item) -> bool;
 
 protected:
   auto init_singleton() -> void override;

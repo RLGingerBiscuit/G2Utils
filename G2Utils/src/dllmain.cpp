@@ -1,6 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
+#include <cstdint>
 #include <filesystem>
 
 #include <spdlog/fmt/fmt.h>
@@ -87,6 +88,28 @@ void run() {
         table_list.refresh();
         item_list.refresh();
       }
+
+      auto can_spawn_item = player_list.selected_player().has_value() &&
+                            table_list.selected_table().has_value() &&
+                            item_list.selected_item().has_value();
+
+      static int count = 1;
+
+      if (!can_spawn_item)
+        ImGui::BeginDisabled();
+
+      if (ImGui::Button("Spawn")) {
+        PlayerManager::instance().give_item_to_player(
+            *player_list.selected_player(), *item_list.selected_item(), count);
+      }
+
+      if (!can_spawn_item)
+        ImGui::EndDisabled();
+
+      ImGui::SameLine();
+
+      ImGui::InputInt("Count", &count);
+
       player_list.render();
       table_list.render();
       item_list.render();
