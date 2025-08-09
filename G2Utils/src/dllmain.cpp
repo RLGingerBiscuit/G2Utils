@@ -13,8 +13,11 @@
 
 #include "G2/ConfigManager.hpp"
 #include "G2/ConsoleManager.hpp"
+#include "G2/PlayerManager.hpp"
 #include "G2/WindowManager.hpp"
-#include "G2/defer.hpp"
+#include "defer.hpp"
+
+#include "UI/PlayerList.hpp"
 
 #define UNUSED(x) ((void)x);
 
@@ -37,9 +40,14 @@ void run() {
   WindowManager::init();
   defer(WindowManager::deinit());
 
+  PlayerManager::init();
+  defer(PlayerManager::deinit());
+
   auto &console = ConsoleManager::instance();
   auto &window = WindowManager::instance();
   auto &config = ConfigManager::instance().config();
+
+  auto player_list = PlayerList();
 
   while (!window.exit_requested()) {
     window.begin_frame();
@@ -51,6 +59,14 @@ void run() {
         else
           console.hide();
       }
+    }
+    ImGui::End();
+
+    if (ImGui::Begin("Item Spawner")) {
+      if (ImGui::Button("Refresh")){
+        player_list.refresh();
+      }
+      player_list.render();
     }
     ImGui::End();
 

@@ -20,13 +20,13 @@ end
 target("G2Utils-GRTS", function()
     common_stuff()
 
-    -- add_deps("G2Utils-SDK-GRTS", { private = true })
-    -- add_defines("G2_SDK=GRTS")
+    add_deps("G2Utils-SDK-GRTS", { private = true })
+    add_defines("G2_SDK=GRTS")
 end)
 
 target("G2Utils-GDK", function()
     common_stuff()
 
-    -- add_deps("G2Utils-SDK-GDK", { private = true })
-    -- add_defines("G2_SDK=GDK")
+    add_deps("G2Utils-SDK-GDK", { private = true })
+    add_defines("G2_SDK=GDK")
 end)
