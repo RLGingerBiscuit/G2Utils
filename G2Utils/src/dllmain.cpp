@@ -13,11 +13,15 @@
 
 #include "G2/ConfigManager.hpp"
 #include "G2/ConsoleManager.hpp"
+#include "G2/DataTableManager.hpp"
+#include "G2/ItemManager.hpp"
 #include "G2/PlayerManager.hpp"
 #include "G2/WindowManager.hpp"
 #include "defer.hpp"
 
+#include "UI/ItemList.hpp"
 #include "UI/PlayerList.hpp"
+#include "UI/TableList.hpp"
 
 #define UNUSED(x) ((void)x);
 
@@ -43,11 +47,19 @@ void run() {
   PlayerManager::init();
   defer(PlayerManager::deinit());
 
+  DataTableManager::init();
+  defer(DataTableManager::deinit());
+
+  ItemManager::init();
+  defer(ItemManager::deinit());
+
   auto &console = ConsoleManager::instance();
   auto &window = WindowManager::instance();
   auto &config = ConfigManager::instance().config();
 
   auto player_list = PlayerList();
+  auto table_list = TableList();
+  auto item_list = ItemList(table_list);
 
   while (!window.exit_requested()) {
     window.begin_frame();
@@ -59,14 +71,25 @@ void run() {
         else
           console.hide();
       }
+
+      // TODO: This is here because the game doesn't quite close properly
+      // sometimes (EA amirite?).
+      //       It's simply quicker to crash the game than force close it.
+      if (ImGui::Button("Force Crash")) {
+        *((volatile uint64_t *)0) = 123;
+      }
     }
     ImGui::End();
 
     if (ImGui::Begin("Item Spawner")) {
-      if (ImGui::Button("Refresh")){
+      if (ImGui::Button("Refresh")) {
         player_list.refresh();
+        table_list.refresh();
+        item_list.refresh();
       }
       player_list.render();
+      table_list.render();
+      item_list.render();
     }
     ImGui::End();
 
