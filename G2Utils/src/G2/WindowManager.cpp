@@ -47,13 +47,28 @@ auto WindowManager::init_singleton() -> void {
 
   static constexpr auto glsl_version = "#version 150";
 
+  IMGUI_CHECKVERSION();
   ImGui::CreateContext();
+
   ImGui::StyleColorsDark();
+  auto &io = ImGui::GetIO();
   auto &style = ImGui::GetStyle();
+
+  // Enable docking
+  io.ConfigFlags |=
+      ImGuiConfigFlags_DockingEnable | ImGuiConfigFlags_ViewportsEnable;
+  style.WindowRounding = 0;
+  style.Colors[ImGuiCol_WindowBg].w = 1;
+
+  // Enable scaling
+  // io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleFonts |
+  //                   ImGuiConfigFlags_DpiEnableScaleViewports;
 
   auto scale = get_window_scale();
   style.ScaleAllSizes(scale);
   style.FontScaleDpi = scale;
+  io.ConfigDpiScaleFonts = true;
+  io.ConfigDpiScaleViewports = true;
 
   ImGui_ImplGlfw_InitForOpenGL(m_window, true);
   ImGui_ImplOpenGL3_Init(glsl_version);
@@ -76,6 +91,9 @@ auto WindowManager::begin_frame() -> void {
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
+
+  if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    ImGui::DockSpaceOverViewport();
 }
 
 auto WindowManager::end_frame() -> void {
@@ -88,6 +106,13 @@ auto WindowManager::end_frame() -> void {
   glClear(GL_COLOR_BUFFER_BIT);
 
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+  if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+    auto *backup = glfwGetCurrentContext();
+    ImGui::UpdatePlatformWindows();
+    ImGui::RenderPlatformWindowsDefault();
+    glfwMakeContextCurrent(backup);
+  }
 
   glfwSwapBuffers(m_window);
 }
