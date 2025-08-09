@@ -6,11 +6,10 @@
 #include "G2/Singleton.hpp"
 
 struct PlayerHandle final {
-public:
+  explicit PlayerHandle() {};
   explicit PlayerHandle(int32_t id, std::string name)
       : m_id(id), m_name(name) {};
 
-public:
   auto id() -> int32_t { return m_id; }
   auto id() const -> const int32_t { return m_id; }
 
@@ -27,7 +26,8 @@ class PlayerManager final : public Singleton<PlayerManager> {
 
 public:
   auto get_player_by_id(int32_t target_id) -> std::optional<PlayerHandle>;
-  auto get_player_by_name(std::string target_name) -> std::optional<PlayerHandle>;
+  auto get_player_by_name(std::string target_name)
+      -> std::optional<PlayerHandle>;
   auto get_all_players() -> std::vector<PlayerHandle>;
 
 protected:
