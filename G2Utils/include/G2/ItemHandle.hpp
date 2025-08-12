@@ -19,6 +19,16 @@ struct ItemHandle final {
     return DataTableHandle(m_table_name);
   }
 
+  auto operator==(const ItemHandle &x) -> bool {
+    return m_table_name == x.m_table_name && m_item_name == x.m_item_name;
+  }
+  auto operator==(const ItemHandle &x) const -> bool {
+    return m_table_name == x.m_table_name && m_item_name == x.m_item_name;
+  }
+
+  auto operator!=(const ItemHandle &x) -> bool { return !(*this == x); }
+  auto operator!=(const ItemHandle &x) const -> bool { return !(*this == x); }
+
 private:
   std::string m_table_name;
   std::string m_item_name;

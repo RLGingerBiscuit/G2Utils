@@ -9,6 +9,18 @@ struct DataTableHandle final {
   auto name() -> std::string & { return m_name; }
   auto name() const -> const std::string & { return m_name; }
 
+  auto operator==(const DataTableHandle &x) -> bool {
+    return m_name == x.m_name;
+  }
+  auto operator==(const DataTableHandle &x) const -> bool {
+    return m_name == x.m_name;
+  }
+
+  auto operator!=(const DataTableHandle &x) -> bool { return !(*this == x); }
+  auto operator!=(const DataTableHandle &x) const -> bool {
+    return !(*this == x);
+  }
+
 private:
   std::string m_name;
 };

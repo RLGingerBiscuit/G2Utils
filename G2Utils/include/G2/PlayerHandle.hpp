@@ -14,6 +14,14 @@ struct PlayerHandle final {
   auto name() -> std::string & { return m_name; }
   auto name() const -> const std::string & { return m_name; }
 
+  auto operator==(const PlayerHandle &x) -> bool { return m_id == x.m_id; }
+  auto operator==(const PlayerHandle &x) const -> bool {
+    return m_id == x.m_id;
+  }
+
+  auto operator!=(const PlayerHandle &x) -> bool { return !(*this == x); }
+  auto operator!=(const PlayerHandle &x) const -> bool { return !(*this == x); }
+
 private:
   int32_t m_id;
   std::string m_name;

@@ -22,7 +22,7 @@ private:
   std::optional<ItemHandle> m_selected_item;
 
   // Duplicate so we can detect when table changes
-  std::optional<std::string> m_prev_selected_table;
+  std::optional<DataTableHandle> m_prev_selected_table;
   TableList &m_table_list;
 
   std::string m_filter;

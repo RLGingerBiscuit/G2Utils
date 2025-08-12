@@ -25,7 +25,7 @@ auto ItemList::refresh() -> void {
     m_selected_item = {};
   }
 
-  m_prev_selected_table = selected_table->name();
+  m_prev_selected_table = selected_table->to_handle();
   refilter_items();
 }
 
@@ -36,7 +36,7 @@ auto ItemList::render() -> void {
     defer(ImGui::EndListBox());
 
     if (table.has_value()) {
-      if (table->name() != m_prev_selected_table)
+      if (table->to_handle() != m_prev_selected_table)
         refresh();
 
       for (auto &item : m_filtered_items) {
