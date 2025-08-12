@@ -73,11 +73,11 @@ void run() {
           console.hide();
       }
 
-      // TODO: This is here because the game doesn't quite close properly
+      // NOTE: This is here because the game doesn't quite close properly
       // sometimes (EA amirite?).
       //       It's simply quicker to crash the game than force close it.
       if (ImGui::Button("Force Crash")) {
-        *((volatile uint64_t *)0) = 123;
+        *((volatile uint64_t *)0) = 34 + 35;
       }
     }
     ImGui::End();
@@ -85,7 +85,9 @@ void run() {
     if (ImGui::Begin("Item Spawner")) {
       if (ImGui::Button("Refresh")) {
         player_list.refresh();
-        table_list.refresh();
+        // FIXME: We really should just not crash on refresh in the first place
+        if (!table_list.has_inited_tables())
+          table_list.refresh();
         item_list.refresh();
       }
 
@@ -95,17 +97,6 @@ void run() {
 
       static int count = 1;
 
-      if (!can_spawn_item)
-        ImGui::BeginDisabled();
-
-      if (ImGui::Button("Spawn")) {
-        PlayerManager::instance().give_item_to_player(
-            *player_list.selected_player(), *item_list.selected_item(), count);
-      }
-
-      if (!can_spawn_item)
-        ImGui::EndDisabled();
-
       ImGui::SameLine();
 
       ImGui::InputInt("Count", &count);
@@ -113,6 +104,20 @@ void run() {
       player_list.render();
       table_list.render();
       item_list.render();
+
+      if (!can_spawn_item)
+        ImGui::BeginDisabled();
+
+      if (ImGui::Button("Spawn")) {
+        assert(player_list.selected_player().has_value());
+        assert(table_list.selected_table().has_value());
+        assert(item_list.selected_item().has_value());
+        PlayerManager::instance().give_item_to_player(
+            *player_list.selected_player(), *item_list.selected_item(), count);
+      }
+
+      if (!can_spawn_item)
+        ImGui::EndDisabled();
     }
     ImGui::End();
 

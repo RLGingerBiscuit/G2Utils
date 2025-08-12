@@ -4,7 +4,7 @@
 #include <optional>
 #include <vector>
 
-#include "G2/PlayerManager.hpp"
+#include "G2/PlayerHandle.hpp"
 
 class PlayerList final {
 public:
