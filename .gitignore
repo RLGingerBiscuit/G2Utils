@@ -6,3 +6,5 @@
 /.xmake/
 /build/
 /vs*/
+
+!**/.gitkeep
