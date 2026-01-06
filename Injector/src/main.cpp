@@ -44,8 +44,8 @@ struct fmt::formatter<G2Variant> : fmt::formatter<fmt::string_view> {
 DWORD get_g2_process(G2Variant *out_variant);
 
 static const std::unordered_map<G2Variant, std::string> VARIANT_EXES = {
-    {G2Variant::GRTS, std::string("Grounded2-WinGRTS-Shipping.exe")},
-    {G2Variant::GDK, std::string("Grounded2-WinGDK-Shipping.exe")},
+    {G2Variant::GRTS, std::string("Grounded2-WinGRTS-Shipping")},
+    {G2Variant::GDK, std::string("Grounded2-WinGDK-Shipping")},
 };
 
 int main() {
@@ -67,8 +67,12 @@ int main() {
                VARIANT_EXES.at(variant), variant, dwTargetProcessId);
 
   const auto cwd = std::filesystem::current_path();
-#ifdef INJECT_DUMPER_7
-  const auto dllName = fmt::format("Dumper-7.dll", variant);
+#if defined(INJECT_DUMPER_7)
+  const auto dllName = fmt::format("Dumper-7.dll");
+#elif defined(INJECT_UE4SS)
+  const auto dllName = fmt::format("UE4SS.dll");
+#elif defined(INJECT_HELPER)
+  const auto dllName = fmt::format("grounded_helper.dll");
 #else
   const auto dllName = fmt::format("G2Utils-{}.dll", variant);
 #endif
@@ -171,12 +175,12 @@ DWORD get_g2_process(G2Variant *out_variant) {
 
   DWORD dwTargetProcessId = 0;
   do {
-    const auto procExe = std::string(procEntry32.szExeFile);
-    for (const auto x : VARIANT_EXES) {
-      if (procExe == x.second) {
+    const auto exeFile = std::string(procEntry32.szExeFile);
+    for (const auto [variant, variant_identifier] : VARIANT_EXES) {
+      if (exeFile.contains(variant_identifier)) {
         dwTargetProcessId = procEntry32.th32ProcessID;
         if (out_variant)
-          *out_variant = x.first;
+          *out_variant = variant;
         break;
       }
     }
