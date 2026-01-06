@@ -26,8 +26,8 @@ private:
   MAKE_NONMOVEABLE(Singleton);
 
 protected:
-  virtual auto init_singleton() -> void = 0;
-  virtual auto deinit_singleton() -> void = 0;
+  virtual auto init_singleton() -> void {}
+  virtual auto deinit_singleton() -> void {}
 
 public:
   static auto init() -> void {

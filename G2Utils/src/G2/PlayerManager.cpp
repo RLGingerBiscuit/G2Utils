@@ -41,10 +41,6 @@ static auto get_player_state(PlayerHandle handle) -> SDK::APlayerState * {
   return nullptr;
 }
 
-auto PlayerManager::init_singleton() -> void {}
-
-auto PlayerManager::deinit_singleton() -> void {}
-
 auto PlayerManager::get_player_by_id(int32_t target_id)
     -> std::optional<PlayerHandle> {
   auto *world = SDK::UWorld::GetWorld();

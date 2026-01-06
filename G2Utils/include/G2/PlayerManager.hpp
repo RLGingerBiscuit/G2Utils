@@ -20,8 +20,4 @@ public:
       -> bool;
 
   auto is_valid_player(PlayerHandle player) -> bool;
-
-protected:
-  auto init_singleton() -> void override;
-  auto deinit_singleton() -> void override;
 };

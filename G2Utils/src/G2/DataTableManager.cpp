@@ -15,10 +15,6 @@
 
 SINGLETON_IMPL(DataTableManager);
 
-auto DataTableManager::init_singleton() -> void {}
-
-auto DataTableManager::deinit_singleton() -> void {}
-
 auto DataTableManager::get_all_tables()
     -> std::unordered_map<std::string, DataTableHandle> {
   std::unordered_map<std::string, DataTableHandle> tables;

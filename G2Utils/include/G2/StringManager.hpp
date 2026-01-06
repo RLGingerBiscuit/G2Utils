@@ -18,10 +18,6 @@ class FName;
 class StringManager final : public Singleton<StringManager> {
   friend class Singleton<StringManager>;
 
-protected:
-  auto init_singleton() -> void override;
-  auto deinit_singleton() -> void override;
-
 public:
   auto to_string(const std::wstring &wstr) -> std::string;
   auto to_string(const SDK::FString &fstring) -> std::string;

@@ -9,10 +9,6 @@ struct Config final {
 class ConfigManager final : public Singleton<ConfigManager> {
   friend class Singleton<ConfigManager>;
 
-protected:
-  auto init_singleton() -> void override;
-  auto deinit_singleton() -> void override;
-
 public:
   auto config() -> Config & { return m_config; }
   auto config() const -> const Config & { return m_config; }

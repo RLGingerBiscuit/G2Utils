@@ -22,8 +22,4 @@ public:
       -> std::optional<SDK::UDataTable *>;
 
   auto get_table_info(DataTableHandle handle) -> std::optional<DataTableInfo>;
-
-protected:
-  auto init_singleton() -> void override;
-  auto deinit_singleton() -> void override;
 };

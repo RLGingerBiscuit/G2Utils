@@ -127,10 +127,6 @@ private:
 
 static StringCache s_cache;
 
-auto StringManager::init_singleton() -> void {}
-
-auto StringManager::deinit_singleton() -> void {}
-
 auto StringManager::to_string(const std::wstring &wstr) -> std::string {
   return s_cache.get_or_add(wstr)->str;
 }

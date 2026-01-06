@@ -36,10 +36,6 @@ public:
   // get_many_items.
   auto get_item(ItemHandle item) -> std::optional<ItemInfo>;
 
-protected:
-  auto init_singleton() -> void override;
-  auto deinit_singleton() -> void override;
-
 private:
   std::unordered_map<ItemHandle, ItemInfo> m_info_cache;
 };
