@@ -77,7 +77,16 @@ Window::Window() {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  auto window_title = fmt::format("G2Utils (OpenGL3)");
+  std::string sdk_variant;
+#if defined(G2SDK_GDX)
+  sdk_variant = "GDX";
+#elif defined(G2SDK_GRTS)
+  sdk_variant = "GRTS";
+#else
+#error "Unknown SDK variant"
+#endif
+
+  auto window_title = fmt::format("G2Utils (OpenGL3, {})", sdk_variant);
   m_window =
       glfwCreateWindow(1280, 800, window_title.c_str(), nullptr, nullptr);
   if (m_window == nullptr) {
