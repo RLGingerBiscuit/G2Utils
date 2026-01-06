@@ -27,6 +27,7 @@ auto TableList::render() -> void {
       if (ImGui::Selectable(table.name().c_str(),
                             m_selected_table.has_value() &&
                                 m_selected_table->name() == table.name())) {
+        spdlog::info("Selected table changed to {}", table.name());
         m_selected_table = DataTableManager::instance().get_table_info(
             DataTableHandle(table.name()));
       }
