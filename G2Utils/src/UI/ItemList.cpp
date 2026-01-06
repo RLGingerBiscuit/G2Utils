@@ -58,8 +58,7 @@ auto ItemList::render() -> void {
     refilter_items();
 
   if (m_selected_item.has_value()) {
-    ImGui::Text("Selected item: '%s'",
-                fmt::to_string(*m_selected_item).c_str());
+    ImGui::Text("Selected item: '%s'", m_selected_item->item_name().c_str());
   } else {
     ImGui::Text("Selected item: None");
   }

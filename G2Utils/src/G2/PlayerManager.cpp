@@ -8,8 +8,37 @@
 #include "G2/DataTableManager.hpp"
 #include "G2/ItemManager.hpp"
 #include "G2/PlayerManager.hpp"
+#include "G2/StringManager.hpp"
 
 SINGLETON_IMPL(PlayerManager);
+
+static auto get_player_state(PlayerHandle handle) -> SDK::APlayerState * {
+  if (!PlayerManager::get().is_valid_player(handle)) {
+    spdlog::warn("Player {} was not valid", handle);
+    return nullptr;
+  }
+
+  auto *world = SDK::UWorld::GetWorld();
+  if (world == nullptr) {
+    spdlog::warn("World was null");
+    return nullptr;
+  }
+
+  auto *state = world->GameState;
+  if (state == nullptr) {
+    spdlog::warn("World state was null");
+    return nullptr;
+  }
+
+  for (auto *player_state : state->PlayerArray) {
+    if (player_state == nullptr || player_state->PlayerId != handle.id())
+      continue;
+    return player_state;
+  }
+
+  spdlog::warn("Could not find state for player {}", handle);
+  return nullptr;
+}
 
 auto PlayerManager::init_singleton() -> void {}
 
@@ -103,6 +132,9 @@ auto PlayerManager::give_item_to_player(PlayerHandle player, ItemHandle item,
     return false;
   }
 
+  auto data_table = DataTableManager::get().get_table_raw(item.table_handle());
+  assert(data_table.has_value());
+
   auto *world = SDK::UWorld::GetWorld();
   if (world == nullptr) {
     spdlog::warn("World was null");
@@ -132,13 +164,12 @@ auto PlayerManager::give_item_to_player(PlayerHandle player, ItemHandle item,
 
     auto *character = static_cast<SDK::ABP_SurvivalPlayerCharacter_C *>(pawn);
 
-    SDK::FDataTableRowHandle row_handle = {};
+    SDK::FDataTableRowHandle row_handle = {
+        .DataTable = *data_table,
+        .RowName = String::to_fname(item.item_name()),
+    };
 
-    auto table_and_row = DataTableManager::get().get_table_and_row(item);
-
-    // TODO: reduce searching (wrappers maybe?)
-    row_handle.DataTable = table_and_row.first;
-    row_handle.RowName = table_and_row.second;
+    spdlog::info("Giving '{}' x{} to player", item, count, player);
 
     game_mode->GrantItemsToPlayer(character, row_handle, count);
 
@@ -146,35 +177,6 @@ auto PlayerManager::give_item_to_player(PlayerHandle player, ItemHandle item,
   }
 
   return false;
-}
-
-auto PlayerManager::get_player_state(PlayerHandle handle)
-    -> SDK::APlayerState * {
-  if (!PlayerManager::is_valid_player(handle)) {
-    spdlog::warn("Player {} was not valid", handle);
-    return nullptr;
-  }
-
-  auto *world = SDK::UWorld::GetWorld();
-  if (world == nullptr) {
-    spdlog::warn("World was null");
-    return nullptr;
-  }
-
-  auto *state = world->GameState;
-  if (state == nullptr) {
-    spdlog::warn("World state was null");
-    return nullptr;
-  }
-
-  for (auto *player_state : state->PlayerArray) {
-    if (player_state == nullptr || player_state->PlayerId != handle.id())
-      continue;
-    return player_state;
-  }
-
-  spdlog::warn("Could not find state for player {}", handle);
-  return nullptr;
 }
 
 auto PlayerManager::is_valid_player(PlayerHandle player) -> bool {

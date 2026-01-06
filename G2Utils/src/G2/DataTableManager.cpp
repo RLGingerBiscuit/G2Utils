@@ -45,7 +45,7 @@ auto DataTableManager::get_all_tables()
 }
 
 auto DataTableManager::get_table_raw(DataTableHandle handle)
-    -> SDK::UDataTable * {
+    -> std::optional<SDK::UDataTable *> {
   SDK::UDataTable *table = nullptr;
 
   for (int i = 0; i < SDK::UObject::GObjects->Num(); ++i) {
@@ -57,8 +57,10 @@ auto DataTableManager::get_table_raw(DataTableHandle handle)
     break;
   }
 
-  if (table == nullptr)
+  if (table == nullptr) {
     spdlog::error("Data Table '{}' could not be found", handle);
+    return {};
+  }
 
   return table;
 }
@@ -66,12 +68,12 @@ auto DataTableManager::get_table_raw(DataTableHandle handle)
 auto DataTableManager::get_table_info(DataTableHandle handle)
     -> std::optional<DataTableInfo> {
   auto table = get_table_raw(handle);
-  if (table == nullptr)
+  if (!table.has_value())
     return {};
 
   std::unordered_map<std::string, ItemHandle> table_items;
 
-  auto &map = table->RowMap;
+  auto &map = table.value()->RowMap;
   table_items.reserve(map.Num());
 
   for (const auto &row : map) {
@@ -86,21 +88,4 @@ auto DataTableManager::get_table_info(DataTableHandle handle)
   }
 
   return DataTableInfo(handle.name(), table_items);
-}
-
-auto DataTableManager::get_table_and_row(ItemHandle handle)
-    -> std::pair<SDK::UDataTable *, SDK::FName> {
-  auto table = get_table_raw(handle.table_handle());
-  if (table == nullptr)
-    return {};
-
-  auto &map = table->RowMap;
-
-  for (const auto &row : map) {
-    auto name = row.Key().ToString();
-    if (name == handle.item_name())
-      return {table, row.Key()};
-  }
-
-  return {};
 }

@@ -1,6 +1,6 @@
-#include "G2/Singleton.hpp"
-
 #include <GLFW/glfw3.h>
+
+#include "G2/Singleton.hpp"
 
 class WindowManager : public Singleton<WindowManager> {
   friend class Singleton<WindowManager>;

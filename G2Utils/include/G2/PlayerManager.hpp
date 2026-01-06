@@ -7,12 +7,6 @@
 #include "G2/PlayerHandle.hpp"
 #include "G2/Singleton.hpp"
 
-// FIXME: Preferably, I want to keep all mentions of the SDK functions to the
-//        .cpp files. This ain't that.
-namespace SDK {
-class APlayerState;
-}
-
 class PlayerManager final : public Singleton<PlayerManager> {
   friend class Singleton<PlayerManager>;
 
@@ -24,8 +18,6 @@ public:
 
   auto give_item_to_player(PlayerHandle player, ItemHandle item, int count)
       -> bool;
-
-  auto get_player_state(PlayerHandle handle) -> SDK::APlayerState *;
 
   auto is_valid_player(PlayerHandle player) -> bool;
 

@@ -17,6 +17,7 @@
 #include "G2/DataTableManager.hpp"
 #include "G2/ItemManager.hpp"
 #include "G2/PlayerManager.hpp"
+#include "G2/StringManager.hpp"
 #include "G2/WindowManager.hpp"
 #include "defer.hpp"
 
@@ -34,6 +35,9 @@ void init_loggers();
 void run() {
   ConsoleManager::init();
   defer(ConsoleManager::deinit());
+
+  StringManager::init();
+  defer(StringManager::deinit());
 
   init_loggers();
 
