@@ -9,7 +9,7 @@
 
 class ItemList final {
 public:
-  ItemList(TableList &table_list) : m_table_list(table_list) {}
+  explicit ItemList(TableList &table_list) : m_table_list(table_list) {}
 
   auto refresh() -> void;
   auto render() -> void;

@@ -18,12 +18,12 @@
 #include "G2/ItemManager.hpp"
 #include "G2/PlayerManager.hpp"
 #include "G2/StringManager.hpp"
-#include "G2/WindowManager.hpp"
 #include "defer.hpp"
 
 #include "UI/ItemList.hpp"
 #include "UI/PlayerList.hpp"
 #include "UI/TableList.hpp"
+#include "UI/Window.hpp"
 
 #define UNUSED(x) ((void)x);
 
@@ -46,9 +46,6 @@ void run() {
   ConfigManager::init();
   defer(ConfigManager::deinit());
 
-  WindowManager::init();
-  defer(WindowManager::deinit());
-
   PlayerManager::init();
   defer(PlayerManager::deinit());
 
@@ -59,8 +56,9 @@ void run() {
   defer(ItemManager::deinit());
 
   auto &console = ConsoleManager::get();
-  auto &window = WindowManager::get();
   auto &config = ConfigManager::get().config();
+
+  Window window;
 
   auto player_list = PlayerList();
   auto table_list = TableList();

@@ -1,20 +1,70 @@
-#include <glad/glad.h>
+#include "UI/Window.hpp"
 
+#include <GLFW/glfw3.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
+#include <glad/glad.h>
 #include <imgui.h>
-
 #include <spdlog/fmt/fmt.h>
 #include <spdlog/spdlog.h>
 
-#include "G2/WindowManager.hpp"
-#include "GLFW/glfw3.h"
+static void glfw_error_callback(int error, const char *desc) {
+  std::string error_str;
+  switch (error) {
+  case GLFW_NO_ERROR:
+    error_str = "NO_ERROR";
+    break;
+  case GLFW_NOT_INITIALIZED:
+    error_str = "NOT_INITIALIZED";
+    break;
+  case GLFW_NO_CURRENT_CONTEXT:
+    error_str = "NO_CURRENT_CONTEXT";
+    break;
+  case GLFW_INVALID_ENUM:
+    error_str = "INVALID_ENUM";
+    break;
+  case GLFW_INVALID_VALUE:
+    error_str = "INVALID_VALUE";
+    break;
+  case GLFW_OUT_OF_MEMORY:
+    error_str = "OUT_OF_MEMORY";
+    break;
+  case GLFW_API_UNAVAILABLE:
+    error_str = "API_UNAVAILABLE";
+    break;
+  case GLFW_VERSION_UNAVAILABLE:
+    error_str = "VERSION_UNAVAILABLE";
+    break;
+  case GLFW_PLATFORM_ERROR:
+    error_str = "PLATFORM_ERROR";
+    break;
+  case GLFW_FORMAT_UNAVAILABLE:
+    error_str = "FORMAT_UNAVAILABLE";
+    break;
+  case GLFW_NO_WINDOW_CONTEXT:
+    error_str = "NO_WINDOW_CONTEXT";
+    break;
+  case GLFW_CURSOR_UNAVAILABLE:
+    error_str = "CURSOR_UNAVAILABLE";
+    break;
+  case GLFW_FEATURE_UNAVAILABLE:
+    error_str = "FEATURE_UNAVAILABLE";
+    break;
+  case GLFW_FEATURE_UNIMPLEMENTED:
+    error_str = "FEATURE_UNIMPLEMENTED";
+    break;
+  case GLFW_PLATFORM_UNAVAILABLE:
+    error_str = "PLATFORM_UNAVAILABLE";
+    break;
+  default:
+    error_str = "UNKNOWN";
+    break;
+  }
 
-SINGLETON_IMPL(WindowManager);
+  spdlog::error("GLFW Error ({}): {}", error, desc);
+}
 
-static void glfw_error_callback(int error, const char *desc) {}
-
-auto WindowManager::init_singleton() -> void {
+Window::Window() {
   glfwSetErrorCallback(glfw_error_callback);
   if (!glfwInit()) {
     spdlog::error("Could not initialise glfw");
@@ -76,7 +126,7 @@ auto WindowManager::init_singleton() -> void {
   spdlog::info("Initialised ImGui");
 }
 
-auto WindowManager::deinit_singleton() -> void {
+Window::~Window() {
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
   ImGui::DestroyContext();
@@ -85,7 +135,7 @@ auto WindowManager::deinit_singleton() -> void {
   glfwTerminate();
 }
 
-auto WindowManager::begin_frame() -> void {
+auto Window::begin_frame() -> void {
   glfwPollEvents();
 
   ImGui_ImplOpenGL3_NewFrame();
@@ -96,7 +146,7 @@ auto WindowManager::begin_frame() -> void {
     ImGui::DockSpaceOverViewport();
 }
 
-auto WindowManager::end_frame() -> void {
+auto Window::end_frame() -> void {
   ImGui::Render();
 
   int width = 0, height = 0;
@@ -117,14 +167,14 @@ auto WindowManager::end_frame() -> void {
   glfwSwapBuffers(m_window);
 }
 
-auto WindowManager::exit_requested() -> bool {
+auto Window::exit_requested() -> bool {
   return glfwWindowShouldClose(m_window);
 }
 
-auto WindowManager::request_exit() -> void {
+auto Window::request_exit() -> void {
   glfwSetWindowShouldClose(m_window, true);
 }
 
-auto WindowManager::get_window_scale() -> float {
+auto Window::get_window_scale() -> float {
   return ImGui_ImplGlfw_GetContentScaleForMonitor(glfwGetPrimaryMonitor());
 }

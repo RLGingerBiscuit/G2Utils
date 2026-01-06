@@ -1,11 +1,18 @@
+#pragma once
+
 #include <GLFW/glfw3.h>
 
 #include "G2/Singleton.hpp"
 
-class WindowManager : public Singleton<WindowManager> {
-  friend class Singleton<WindowManager>;
+class Window final {
+private:
+  MAKE_NONCOPYABLE(Window);
+  MAKE_NONMOVEABLE(Window);
 
 public:
+  Window();
+  ~Window();
+
   auto begin_frame() -> void;
   auto end_frame() -> void;
 
@@ -13,10 +20,6 @@ public:
   auto request_exit() -> void;
 
   auto get_window_scale() -> float;
-
-protected:
-  auto init_singleton() -> void override;
-  auto deinit_singleton() -> void override;
 
 private:
   GLFWwindow *m_window{};
