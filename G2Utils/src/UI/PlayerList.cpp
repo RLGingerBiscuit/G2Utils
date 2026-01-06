@@ -23,8 +23,8 @@ auto PlayerList::render() -> void {
     for (size_t i = 0; i < m_players.size(); ++i) {
       auto &player = m_players[i];
       if (ImGui::Selectable(
-              fmt::format("'{}' (ID: {})", player.name(), player.id()).c_str()),
-          m_selected_player_idx == i) {
+              fmt::format("'{}' (ID: {})", player.name(), player.id()).c_str(),
+              m_selected_player_idx == i)) {
         spdlog::info("Selected player changed to {} ({})", player.name(),
                      player.id());
         m_selected_player_idx = i;
