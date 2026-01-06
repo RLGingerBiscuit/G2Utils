@@ -46,24 +46,21 @@ auto DataTableManager::get_all_tables()
 
 auto DataTableManager::get_table_raw(DataTableHandle handle)
     -> SDK::UDataTable * {
-  // auto *object = SDK::UObject::FindObject(handle.name());
-  SDK::UObject *object = nullptr;
+  SDK::UDataTable *table = nullptr;
+
   for (int i = 0; i < SDK::UObject::GObjects->Num(); ++i) {
     auto *obj = SDK::UObject::GObjects->GetByIndex(i);
-    // NOTE: For whatever reason, data tables are also packages (sometimes?), so
-    //       to use the short name (faster comparison), those (and everything
-    //       else) are excluded.
-    if (!obj || obj->Class->CastFlags != SDK::EClassCastFlags::None ||
+    if (!obj || !table->IsA(SDK::UDataTable::StaticClass()) ||
         obj->GetName() != handle.name())
       continue;
-    object = obj;
+    table = reinterpret_cast<SDK::UDataTable *>(table);
     break;
   }
 
-  if (object == nullptr || !object->IsA(SDK::UDataTable::StaticClass()))
-    return nullptr;
+  if (table == nullptr)
+    spdlog::error("Data Table '{}' could not be found", handle);
 
-  return reinterpret_cast<SDK::UDataTable *>(object);
+  return table;
 }
 
 auto DataTableManager::get_table_info(DataTableHandle handle)
@@ -80,11 +77,12 @@ auto DataTableManager::get_table_info(DataTableHandle handle)
   for (const auto &row : map) {
     auto item_name = row.Key().ToString();
     auto *item_data = reinterpret_cast<SDK::FBaseItemData *>(row.Value());
+    auto item_handle = ItemHandle(handle.name(), item_name);
     if (item_data == nullptr) {
-      spdlog::warn("{}.{} is null", handle.name(), item_name);
+      spdlog::warn("'{}' is null", item_handle);
       continue;
     }
-    table_items[item_name] = ItemHandle(handle.name(), item_name);
+    table_items[item_name] = std::move(item_handle);
   }
 
   return DataTableInfo(handle.name(), table_items);

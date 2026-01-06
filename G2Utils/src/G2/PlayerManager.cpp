@@ -18,20 +18,21 @@ auto PlayerManager::deinit_singleton() -> void {}
 auto PlayerManager::get_player_by_id(int32_t target_id)
     -> std::optional<PlayerHandle> {
   auto *world = SDK::UWorld::GetWorld();
-  if (world == nullptr)
+  if (world == nullptr) {
+    spdlog::warn("World was null");
     return {};
+  }
 
   auto *state = world->GameState;
-  if (state == nullptr)
+  if (state == nullptr) {
+    spdlog::warn("World state was null");
     return {};
+  }
 
-  for (int i = 0; i < state->PlayerArray.Num(); ++i) {
-    auto *player_state = state->PlayerArray[i];
+  for (auto *player_state : state->PlayerArray) {
     if (player_state == nullptr)
       continue;
-
     auto player_name = player_state->GetPlayerName().ToString();
-
     if (player_state->PlayerId == target_id)
       return PlayerHandle(player_state->PlayerId, player_name);
   }
@@ -42,20 +43,21 @@ auto PlayerManager::get_player_by_id(int32_t target_id)
 auto PlayerManager::get_player_by_name(std::string target_name)
     -> std::optional<PlayerHandle> {
   auto *world = SDK::UWorld::GetWorld();
-  if (world == nullptr)
+  if (world == nullptr) {
+    spdlog::warn("World was null");
     return {};
+  }
 
   auto *state = world->GameState;
-  if (state == nullptr)
+  if (state == nullptr) {
+    spdlog::warn("World state was null");
     return {};
+  }
 
-  for (int i = 0; i < state->PlayerArray.Num(); ++i) {
-    auto *player_state = state->PlayerArray[i];
+  for (auto *player_state : state->PlayerArray) {
     if (player_state == nullptr)
       continue;
-
     auto player_name = player_state->GetPlayerName().ToString();
-
     if (player_name == target_name)
       return PlayerHandle(player_state->PlayerId, player_name);
   }
@@ -65,23 +67,24 @@ auto PlayerManager::get_player_by_name(std::string target_name)
 
 auto PlayerManager::get_all_players() -> std::vector<PlayerHandle> {
   auto *world = SDK::UWorld::GetWorld();
-  if (world == nullptr)
+  if (world == nullptr) {
+    spdlog::warn("World was null");
     return {};
+  }
 
   auto *state = world->GameState;
-  if (state == nullptr)
+  if (state == nullptr) {
+    spdlog::warn("World state was null");
     return {};
+  }
 
   std::vector<PlayerHandle> players;
   players.reserve(state->PlayerArray.Num());
 
-  for (int i = 0; i < state->PlayerArray.Num(); ++i) {
-    auto *player_state = state->PlayerArray[i];
+  for (auto *player_state : state->PlayerArray) {
     if (player_state == nullptr)
       continue;
-
     auto player_name = player_state->GetPlayerName().ToString();
-
     players.push_back(PlayerHandle(player_state->PlayerId, player_name));
   }
 
@@ -90,19 +93,28 @@ auto PlayerManager::get_all_players() -> std::vector<PlayerHandle> {
 
 auto PlayerManager::give_item_to_player(PlayerHandle player, ItemHandle item,
                                         int count) -> bool {
-  if (!is_valid_player(player))
+  if (!is_valid_player(player)) {
+    spdlog::error("Player {} is not valid", player);
     return false;
-  if (!ItemManager::get().is_valid_item(item))
+  }
+
+  if (!ItemManager::get().is_valid_item(item)) {
+    spdlog::error("Item {} is not valid", item);
     return false;
+  }
 
   auto *world = SDK::UWorld::GetWorld();
-  if (world == nullptr)
+  if (world == nullptr) {
+    spdlog::warn("World was null");
     return false;
+  }
 
   auto *game_mode_base = world->AuthorityGameMode;
   if (game_mode_base == nullptr ||
-      !game_mode_base->IsA(SDK::ABP_SurvivalGameMode_C::StaticClass()))
+      !game_mode_base->IsA(SDK::ABP_SurvivalGameMode_C::StaticClass())) {
+    spdlog::warn("World gamemode was invalid");
     return false;
+  }
 
   auto *game_mode = static_cast<SDK::ABP_SurvivalGameMode_C *>(game_mode_base);
 
@@ -138,25 +150,30 @@ auto PlayerManager::give_item_to_player(PlayerHandle player, ItemHandle item,
 
 auto PlayerManager::get_player_state(PlayerHandle handle)
     -> SDK::APlayerState * {
-  if (!PlayerManager::is_valid_player(handle))
+  if (!PlayerManager::is_valid_player(handle)) {
+    spdlog::warn("Player {} was not valid", handle);
     return nullptr;
+  }
 
   auto *world = SDK::UWorld::GetWorld();
-  if (world == nullptr)
+  if (world == nullptr) {
+    spdlog::warn("World was null");
     return nullptr;
+  }
 
   auto *state = world->GameState;
-  if (state == nullptr)
+  if (state == nullptr) {
+    spdlog::warn("World state was null");
     return nullptr;
+  }
 
-  for (int i = 0; i < state->PlayerArray.Num(); ++i) {
-    auto *player_state = state->PlayerArray[i];
+  for (auto *player_state : state->PlayerArray) {
     if (player_state == nullptr || player_state->PlayerId != handle.id())
       continue;
-
     return player_state;
   }
 
+  spdlog::warn("Could not find state for player {}", handle);
   return nullptr;
 }
 
