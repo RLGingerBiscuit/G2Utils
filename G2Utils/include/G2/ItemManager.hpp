@@ -1,7 +1,6 @@
 #pragma once
 
 #include <optional>
-#include <span>
 #include <unordered_map>
 
 #include "G2/ItemHandle.hpp"
@@ -12,30 +11,26 @@ class ItemManager final : public Singleton<ItemManager> {
   friend class Singleton<ItemManager>;
 
 public:
-  // Check whether the given ItemHandle refers to a valid item.
+  // Reloads all items from the cached data tables.
   //
-  // NOTE: This validation is very slow, so avoid calling this in tight loops.
-  // Prefer caching results or using get_many_items when validating multiple
-  // handles.
-  auto is_valid_item(ItemHandle item) -> bool;
+  // This should be called after DataTableManager::refresh().
+  auto refresh() -> void;
 
-  // Retrieve ItemInfo for a sequence of ItemHandles.
+  // Check whether the given ItemHandle refers to a cached item.
   //
-  // This is a convenience/bulk operation that will return a vector of
-  // ItemInfo objects corresponding to the provided handles. Invalid handles
-  // are skipped. Because individual validation (is_valid_item) is
-  // very slow, using this bulk method can be more efficient than repeatedly
-  // calling get_item in a loop.
-  auto get_many_items(std::span<ItemHandle> items) -> std::vector<ItemInfo>;
+  // NOTE: This does NOT check whether the item currently exists in the
+  // game, that is left to the caller, and should be done as late as possible
+  // for performance reasons.
+  auto is_valid_item(const ItemHandle &handle) -> bool {
+    return m_item_cache.contains(handle);
+  }
 
-  // Retrieve ItemInfo for a single ItemHandle.
-  //
-  // Returns std::nullopt if the handle is invalid or the item cannot be
-  // resolved. Validation performed here is very slow; callers should avoid
-  // frequent calls and consider caching results or batching requests via
-  // get_many_items.
-  auto get_item(ItemHandle item) -> std::optional<ItemInfo>;
+  // Retrieves all cached items.
+  auto get_all_items() -> std::vector<ItemInfo>;
+
+  // Retrieves extended information about the given item from the cache.
+  auto get_item_info(const ItemHandle &handle) -> std::optional<ItemInfo>;
 
 private:
-  std::unordered_map<ItemHandle, ItemInfo> m_info_cache;
+  std::unordered_map<ItemHandle, ItemInfo> m_item_cache;
 };

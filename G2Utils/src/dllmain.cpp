@@ -87,9 +87,7 @@ void run() {
     if (ImGui::Begin("Item Spawner")) {
       if (ImGui::Button("Refresh")) {
         player_list.refresh();
-        // FIXME: We really should just not crash on refresh in the first place
-        if (!table_list.has_inited_tables())
-          table_list.refresh();
+        table_list.refresh();
         item_list.refresh();
       }
 
@@ -114,8 +112,10 @@ void run() {
         assert(player_list.selected_player().has_value());
         assert(table_list.selected_table().has_value());
         assert(item_list.selected_item().has_value());
+
         PlayerManager::get().give_item_to_player(
-            *player_list.selected_player(), *item_list.selected_item(), count);
+            *player_list.selected_player(), *item_list.selected_item(),
+            count);
       }
 
       if (!can_spawn_item)

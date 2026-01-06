@@ -7,6 +7,7 @@
 
 #include <SDK/SDK/Basic.hpp>
 #include <SDK/SDK/Engine_classes.hpp>
+#include <SDK/SDK/OEIText_classes.hpp>
 #include <SDK/UnrealContainers.hpp>
 #include <SDK/UtfN.hpp>
 
@@ -167,6 +168,12 @@ auto StringManager::to_fstring(const SDK::FName &fname) -> SDK::FString {
   return s_cache.get_or_add(fname)->fstring;
 }
 
+auto StringManager::from_locstring(const SDK::FLocString &locstring)
+    -> std::string {
+  auto fstring = SDK::UOEITextLibrary::GetLocStringText(locstring);
+  return to_string(fstring);
+}
+
 namespace String {
 
 auto to_string(const std::wstring &wstr) -> std::string {
@@ -209,6 +216,10 @@ auto to_fname(const std::wstring &wstr) -> SDK::FName {
 }
 auto to_fname(const SDK::FString &fstring) -> SDK::FName {
   return StringManager::get().to_fname(fstring);
+}
+
+auto from_locstring(const SDK::FLocString &locstring) -> std::string {
+  return StringManager::get().from_locstring(locstring);
 }
 
 }; // namespace String

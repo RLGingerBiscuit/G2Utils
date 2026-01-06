@@ -7,31 +7,26 @@
 #include "defer.hpp"
 
 auto PlayerList::refresh() -> void {
-  auto new_players = PlayerManager::get().get_all_players();
+  PlayerManager::get().refresh();
 
-  if (m_selected_player.has_value()) {
-    bool found = std::any_of(
-        new_players.begin(), new_players.end(),
-        [this](auto &handle) { return handle == *m_selected_player; });
-
-    if (!found)
-      m_selected_player = {};
+  if (m_selected_player.has_value() &&
+      !PlayerManager::get().is_valid_player(*m_selected_player)) {
+    m_selected_player = std::nullopt;
   }
-
-  m_players = new_players;
 }
 
 auto PlayerList::render() -> void {
   if (ImGui::BeginListBox("Player List")) {
     defer(ImGui::EndListBox());
 
-    for (auto &player : m_players) {
-      if (ImGui::Selectable(fmt::format("{}", player).c_str(),
+    auto players = PlayerManager::get().get_all_players();
+
+    for (auto &handle : players) {
+      if (ImGui::Selectable(fmt::format("{}", handle).c_str(),
                             m_selected_player.has_value() &&
-                                m_selected_player->id() == player.id())) {
-        spdlog::info("Selected player changed to {}", player.name(),
-                     player.id());
-        m_selected_player = player;
+                                m_selected_player->id() == handle.id())) {
+        spdlog::info("Selected player changed to {}", handle);
+        m_selected_player = handle;
       }
     }
   }

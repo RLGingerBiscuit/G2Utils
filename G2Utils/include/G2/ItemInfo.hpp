@@ -12,8 +12,8 @@ struct ItemInfo final {
   auto handle() -> ItemHandle & { return m_handle; }
   auto handle() const -> const ItemHandle & { return m_handle; }
 
-  auto name() -> std::string & { return handle().item_name(); }
-  auto name() const -> const std::string & { return handle().item_name(); }
+  auto name() -> std::string & { return handle().name(); }
+  auto name() const -> const std::string & { return handle().name(); }
 
   auto display_name() -> std::string & { return m_display_name; }
   auto display_name() const -> const std::string & { return m_display_name; }

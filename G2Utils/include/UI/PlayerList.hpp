@@ -1,7 +1,6 @@
 #pragma once
 
 #include <optional>
-#include <vector>
 
 #include "G2/PlayerHandle.hpp"
 
@@ -15,6 +14,5 @@ public:
   }
 
 private:
-  std::vector<PlayerHandle> m_players;
   std::optional<PlayerHandle> m_selected_player;
 };
