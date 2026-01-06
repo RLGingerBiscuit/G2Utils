@@ -54,9 +54,9 @@ void run() {
   ItemManager::init();
   defer(ItemManager::deinit());
 
-  auto &console = ConsoleManager::instance();
-  auto &window = WindowManager::instance();
-  auto &config = ConfigManager::instance().config();
+  auto &console = ConsoleManager::get();
+  auto &window = WindowManager::get();
+  auto &config = ConfigManager::get().config();
 
   auto player_list = PlayerList();
   auto table_list = TableList();
@@ -112,7 +112,7 @@ void run() {
         assert(player_list.selected_player().has_value());
         assert(table_list.selected_table().has_value());
         assert(item_list.selected_item().has_value());
-        PlayerManager::instance().give_item_to_player(
+        PlayerManager::get().give_item_to_player(
             *player_list.selected_player(), *item_list.selected_item(), count);
       }
 

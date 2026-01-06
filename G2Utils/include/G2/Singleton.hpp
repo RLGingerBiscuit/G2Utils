@@ -44,7 +44,7 @@ public:
     m_instance = nullptr;
   }
 
-  constexpr static auto instance() -> T & {
+  constexpr static auto get() -> T & {
     assert(m_instance != nullptr);
     return *m_instance;
   }

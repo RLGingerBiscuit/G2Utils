@@ -9,7 +9,7 @@ auto ItemManager::deinit_singleton() -> void {}
 
 // auto ItemManager::get_item_info(ItemHandle handle) -> std::optional<ItemInfo>
 // {
-//   auto maybe_table = DataTableManager::instance().get_table_info(
+//   auto maybe_table = DataTableManager::get().get_table_info(
 //       DataTableHandle(handle.table_name()));
 //   if (!maybe_table.has_value())
 //     return {};
@@ -25,7 +25,7 @@ auto ItemManager::deinit_singleton() -> void {}
 
 auto ItemManager::is_valid_item(ItemHandle item) -> bool {
   // TODO: reduce copying
-  auto table = DataTableManager::instance().get_table_info(item.table_handle());
+  auto table = DataTableManager::get().get_table_info(item.table_handle());
   if (!table.has_value())
     return false;
 

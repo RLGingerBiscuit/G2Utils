@@ -19,7 +19,7 @@ BOOL WINAPI ConsoleCtrlHandler(DWORD dwCtrlType) {
 
   case CTRL_CLOSE_EVENT:
     // 'Closed' isn't really closed for us...
-    ConsoleManager::instance().hide();
+    ConsoleManager::get().hide();
     return TRUE;
 
   default:

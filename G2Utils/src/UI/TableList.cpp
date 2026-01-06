@@ -8,7 +8,7 @@
 #include "UI/TableList.hpp"
 
 auto TableList::refresh() -> void {
-  auto new_tables = DataTableManager::instance().get_all_tables();
+  auto new_tables = DataTableManager::get().get_all_tables();
 
   if (m_selected_table.has_value() &&
       !new_tables.contains(m_selected_table->name())) {
@@ -28,7 +28,7 @@ auto TableList::render() -> void {
                             m_selected_table.has_value() &&
                                 m_selected_table->name() == table.name())) {
         spdlog::info("Selected table changed to {}", table.name());
-        m_selected_table = DataTableManager::instance().get_table_info(
+        m_selected_table = DataTableManager::get().get_table_info(
             DataTableHandle(table.name()));
       }
     }

@@ -92,7 +92,7 @@ auto PlayerManager::give_item_to_player(PlayerHandle player, ItemHandle item,
                                         int count) -> bool {
   if (!is_valid_player(player))
     return false;
-  if (!ItemManager::instance().is_valid_item(item))
+  if (!ItemManager::get().is_valid_item(item))
     return false;
 
   auto *world = SDK::UWorld::GetWorld();
@@ -122,7 +122,7 @@ auto PlayerManager::give_item_to_player(PlayerHandle player, ItemHandle item,
 
     SDK::FDataTableRowHandle row_handle = {};
 
-    auto table_and_row = DataTableManager::instance().get_table_and_row(item);
+    auto table_and_row = DataTableManager::get().get_table_and_row(item);
 
     // TODO: reduce searching (wrappers maybe?)
     row_handle.DataTable = table_and_row.first;

@@ -6,7 +6,7 @@
 #include "UI/PlayerList.hpp"
 
 auto PlayerList::refresh() -> void {
-  auto new_players = PlayerManager::instance().get_all_players();
+  auto new_players = PlayerManager::get().get_all_players();
 
   if (new_players.size() < m_players.size() &&
       m_selected_player_idx >= new_players.size()) {
