@@ -22,10 +22,9 @@ auto PlayerList::render() -> void {
 
     for (size_t i = 0; i < m_players.size(); ++i) {
       auto &player = m_players[i];
-      if (ImGui::Selectable(
-              fmt::format("'{}' (ID: {})", player.name(), player.id()).c_str(),
-              m_selected_player_idx == i)) {
-        spdlog::info("Selected player changed to {} ({})", player.name(),
+      if (ImGui::Selectable(fmt::format("{}", player).c_str(),
+                            m_selected_player_idx == i)) {
+        spdlog::info("Selected player changed to {}", player.name(),
                      player.id());
         m_selected_player_idx = i;
       }
@@ -34,8 +33,7 @@ auto PlayerList::render() -> void {
 
   if (m_players.size() > 0) {
     auto &selected_player = m_players[m_selected_player_idx];
-    ImGui::Text("Selected player: '%s' (ID: %d)",
-                selected_player.name().c_str(), selected_player.id());
+    ImGui::Text("Selected player: %s", fmt::to_string(selected_player).c_str());
   } else {
     ImGui::Text("Selected player: None");
   }

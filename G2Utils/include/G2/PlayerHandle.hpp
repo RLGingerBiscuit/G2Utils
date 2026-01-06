@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <spdlog/fmt/fmt.h>
 #include <string>
 
 struct PlayerHandle final {
@@ -25,4 +26,10 @@ struct PlayerHandle final {
 private:
   int32_t m_id;
   std::string m_name;
+};
+
+template <>
+struct fmt::formatter<PlayerHandle> : fmt::formatter<fmt::string_view> {
+  auto format(PlayerHandle handle, fmt::format_context &ctx) const
+      -> fmt::format_context::iterator;
 };

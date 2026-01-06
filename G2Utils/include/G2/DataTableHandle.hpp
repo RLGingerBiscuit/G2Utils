@@ -1,5 +1,6 @@
 #pragma once
 
+#include <spdlog/fmt/fmt.h>
 #include <string>
 
 struct DataTableHandle final {
@@ -23,4 +24,10 @@ struct DataTableHandle final {
 
 private:
   std::string m_name;
+};
+
+template <>
+struct fmt::formatter<DataTableHandle> : fmt::formatter<fmt::string_view> {
+  auto format(DataTableHandle handle, fmt::format_context &ctx) const
+      -> fmt::format_context::iterator;
 };

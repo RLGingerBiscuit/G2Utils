@@ -27,7 +27,7 @@ auto TableList::render() -> void {
       if (ImGui::Selectable(table.name().c_str(),
                             m_selected_table.has_value() &&
                                 m_selected_table->name() == table.name())) {
-        spdlog::info("Selected table changed to {}", table.name());
+        spdlog::info("Selected table changed to {}", table);
         m_selected_table = DataTableManager::get().get_table_info(
             DataTableHandle(table.name()));
       }
@@ -40,8 +40,8 @@ auto TableList::render() -> void {
   }
 
   if (m_selected_table.has_value()) {
-    auto &selected_table = *m_selected_table;
-    ImGui::Text("Selected table: '%s'", selected_table.name().c_str());
+    ImGui::Text("Selected table: '%s'",
+                fmt::to_string(m_selected_table->to_handle()).c_str());
   } else {
     ImGui::Text("Selected table: None");
   }

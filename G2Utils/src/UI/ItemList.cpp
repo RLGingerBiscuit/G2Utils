@@ -2,9 +2,12 @@
 #include <cctype>
 #include <imgui.h>
 #include <imgui_stdlib.h>
+#include <spdlog/fmt/fmt.h>
 #include <spdlog/spdlog.h>
+#include <string>
 
 #include "defer.hpp"
+#include "spdlog/fmt/bundled/format.h"
 
 #include "UI/ItemList.hpp"
 
@@ -44,7 +47,7 @@ auto ItemList::render() -> void {
                               m_selected_item.has_value() &&
                                   m_selected_item->item_name() ==
                                       item.item_name())) {
-          spdlog::info("Selected item changed to {}", item.item_name());
+          spdlog::info("Selected item changed to {}", item);
           m_selected_item = item;
         }
       }
@@ -55,8 +58,8 @@ auto ItemList::render() -> void {
     refilter_items();
 
   if (m_selected_item.has_value()) {
-    auto &selected_item = *m_selected_item;
-    ImGui::Text("Selected item: '%s'", selected_item.item_name().c_str());
+    ImGui::Text("Selected item: '%s'",
+                fmt::to_string(*m_selected_item).c_str());
   } else {
     ImGui::Text("Selected item: None");
   }
