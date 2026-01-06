@@ -50,10 +50,10 @@ auto DataTableManager::get_table_raw(DataTableHandle handle)
 
   for (int i = 0; i < SDK::UObject::GObjects->Num(); ++i) {
     auto *obj = SDK::UObject::GObjects->GetByIndex(i);
-    if (!obj || !table->IsA(SDK::UDataTable::StaticClass()) ||
+    if (!obj || !obj->IsA(SDK::UDataTable::StaticClass()) ||
         obj->GetName() != handle.name())
       continue;
-    table = reinterpret_cast<SDK::UDataTable *>(table);
+    table = reinterpret_cast<SDK::UDataTable *>(obj);
     break;
   }
 
