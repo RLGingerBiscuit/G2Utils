@@ -1,3 +1,5 @@
+#include "G2/PlayerManager.hpp"
+
 #include <SDK/SDK/BP_SurvivalGameMode_classes.hpp>
 #include <SDK/SDK/BP_SurvivalPlayerCharacter_classes.hpp>
 #include <SDK/SDK/Basic.hpp>
@@ -7,7 +9,6 @@
 
 #include "G2/DataTableManager.hpp"
 #include "G2/ItemManager.hpp"
-#include "G2/PlayerManager.hpp"
 #include "G2/StringManager.hpp"
 
 SINGLETON_IMPL(PlayerManager);

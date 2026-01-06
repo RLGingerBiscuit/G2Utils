@@ -1,3 +1,5 @@
+#include "UI/TableList.hpp"
+
 #include <imgui.h>
 #include <imgui_stdlib.h>
 #include <spdlog/spdlog.h>
@@ -5,7 +7,6 @@
 #include "G2/DataTableManager.hpp"
 #include "defer.hpp"
 
-#include "UI/TableList.hpp"
 
 auto TableList::refresh() -> void {
   auto new_tables = DataTableManager::get().get_all_tables();

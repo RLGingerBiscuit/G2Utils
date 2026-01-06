@@ -3,7 +3,6 @@
 #include <optional>
 
 #include "G2/ItemHandle.hpp"
-
 #include "G2/ItemInfo.hpp"
 #include "UI/TableList.hpp"
 

@@ -1,9 +1,10 @@
+#include "UI/PlayerList.hpp"
+
 #include <imgui.h>
+#include <spdlog/spdlog.h>
 
 #include "G2/PlayerManager.hpp"
 #include "defer.hpp"
-
-#include "UI/PlayerList.hpp"
 
 auto PlayerList::refresh() -> void {
   auto new_players = PlayerManager::get().get_all_players();

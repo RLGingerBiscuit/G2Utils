@@ -1,14 +1,16 @@
+#include "UI/ItemList.hpp"
+
 #include <algorithm>
+#include <ranges>
+#include <string>
+
 #include <imgui.h>
 #include <imgui_stdlib.h>
-#include <ranges>
 #include <spdlog/fmt/fmt.h>
 #include <spdlog/spdlog.h>
-#include <string>
 
 #include "G2/ItemInfo.hpp"
 #include "G2/ItemManager.hpp"
-#include "UI/ItemList.hpp"
 #include "defer.hpp"
 
 auto ItemList::refresh() -> void {

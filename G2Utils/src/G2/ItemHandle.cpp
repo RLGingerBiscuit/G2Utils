@@ -1,7 +1,8 @@
+#include "G2/ItemHandle.hpp"
+
 #include <spdlog/fmt/fmt.h>
 
 #include "G2/DataTableHandle.hpp"
-#include "G2/ItemHandle.hpp"
 
 auto fmt::formatter<ItemHandle>::format(ItemHandle handle,
                                         fmt::format_context &ctx) const

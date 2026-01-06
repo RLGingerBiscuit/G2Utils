@@ -1,8 +1,9 @@
 #pragma once
 
 #include <functional>
-#include <spdlog/fmt/fmt.h>
 #include <string>
+
+#include <spdlog/fmt/fmt.h>
 
 #include "G2/DataTableHandle.hpp"
 

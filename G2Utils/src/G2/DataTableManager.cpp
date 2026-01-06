@@ -1,3 +1,5 @@
+#include "G2/DataTableManager.hpp"
+
 #include <cstdint>
 #include <string>
 #include <unordered_map>
@@ -9,7 +11,6 @@
 #include <SDK/SDK/Engine_classes.hpp>
 #include <SDK/SDK/Maine_structs.hpp>
 
-#include "G2/DataTableManager.hpp"
 #include "G2/StringManager.hpp"
 
 SINGLETON_IMPL(DataTableManager);

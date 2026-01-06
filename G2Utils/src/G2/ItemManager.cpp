@@ -1,12 +1,14 @@
+#include "G2/ItemManager.hpp"
+
+#include <unordered_set>
+
 #include <SDK/SDK/Engine_classes.hpp>
 #include <SDK/SDK/Maine_structs.hpp>
-#include <unordered_set>
+#include <SDK/SDK/OEIText_classes.hpp>
 
 #include "G2/DataTableHandle.hpp"
 #include "G2/DataTableManager.hpp"
-#include "G2/ItemManager.hpp"
 #include "G2/StringManager.hpp"
-#include "SDK/SDK/OEIText_classes.hpp"
 
 SINGLETON_IMPL(ItemManager);
 

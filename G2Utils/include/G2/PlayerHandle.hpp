@@ -1,8 +1,9 @@
 #pragma once
 
 #include <cstdint>
-#include <spdlog/fmt/fmt.h>
 #include <string>
+
+#include <spdlog/fmt/fmt.h>
 
 struct PlayerHandle final {
   explicit PlayerHandle() {};

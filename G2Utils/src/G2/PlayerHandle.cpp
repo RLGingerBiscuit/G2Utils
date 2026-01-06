@@ -1,6 +1,6 @@
-#include <spdlog/fmt/fmt.h>
-
 #include "G2/PlayerHandle.hpp"
+
+#include <spdlog/fmt/fmt.h>
 
 auto fmt::formatter<PlayerHandle>::format(PlayerHandle handle,
                                           fmt::format_context &ctx) const

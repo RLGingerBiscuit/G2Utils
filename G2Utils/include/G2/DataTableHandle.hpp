@@ -1,7 +1,8 @@
 #pragma once
 
-#include <spdlog/fmt/fmt.h>
 #include <string>
+
+#include <spdlog/fmt/fmt.h>
 
 struct DataTableHandle final {
   explicit DataTableHandle() {}

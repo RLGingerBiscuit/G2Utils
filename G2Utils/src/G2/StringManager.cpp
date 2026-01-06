@@ -1,14 +1,14 @@
+#include "G2/StringManager.hpp"
+
 #include <memory>
 #include <span>
 #include <string>
 #include <unordered_map>
 
 #include <SDK/SDK/Basic.hpp>
+#include <SDK/SDK/Engine_classes.hpp>
+#include <SDK/UnrealContainers.hpp>
 #include <SDK/UtfN.hpp>
-
-#include "G2/StringManager.hpp"
-#include "SDK/SDK/Engine_classes.hpp"
-#include "SDK/UnrealContainers.hpp"
 
 SINGLETON_IMPL(StringManager);
 

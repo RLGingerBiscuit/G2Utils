@@ -1,11 +1,11 @@
+#include "G2/ConsoleManager.hpp"
+
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
 #include <cstdio>
 
 #include <spdlog/spdlog.h>
-
-#include "G2/ConsoleManager.hpp"
 
 SINGLETON_IMPL(ConsoleManager);
 
