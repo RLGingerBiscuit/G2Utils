@@ -4,6 +4,7 @@
 
 #include "G2/ItemHandle.hpp"
 
+#include "G2/ItemInfo.hpp"
 #include "UI/TableList.hpp"
 
 class ItemList final {
@@ -26,5 +27,5 @@ private:
   TableList &m_table_list;
 
   std::string m_filter;
-  std::vector<ItemHandle> m_filtered_items;
+  std::vector<ItemInfo> m_filtered_items;
 };

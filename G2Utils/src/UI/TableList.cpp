@@ -11,7 +11,7 @@ auto TableList::refresh() -> void {
   auto new_tables = DataTableManager::get().get_all_tables();
 
   if (m_selected_table.has_value() &&
-      !new_tables.contains(m_selected_table->name())) {
+      !new_tables.contains(m_selected_table->handle().name())) {
     m_selected_table = {};
   }
 
@@ -26,7 +26,7 @@ auto TableList::render() -> void {
     for (auto &table : m_filtered_tables) {
       if (ImGui::Selectable(table.name().c_str(),
                             m_selected_table.has_value() &&
-                                m_selected_table->name() == table.name())) {
+                                m_selected_table->handle() == table)) {
         spdlog::info("Selected table changed to {}", table);
         m_selected_table = DataTableManager::get().get_table_info(
             DataTableHandle(table.name()));
@@ -41,7 +41,7 @@ auto TableList::render() -> void {
 
   if (m_selected_table.has_value()) {
     ImGui::Text("Selected table: '%s'",
-                fmt::to_string(m_selected_table->to_handle()).c_str());
+                fmt::to_string(m_selected_table->handle()).c_str());
   } else {
     ImGui::Text("Selected table: None");
   }

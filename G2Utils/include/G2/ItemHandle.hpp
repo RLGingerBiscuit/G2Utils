@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <spdlog/fmt/fmt.h>
 #include <string>
 
@@ -7,8 +8,8 @@
 
 struct ItemHandle final {
   explicit ItemHandle() {}
-  explicit ItemHandle(std::string table_name, std::string item_name)
-      : m_table_handle(table_name), m_item_name(item_name) {}
+  explicit ItemHandle(DataTableHandle table_handle, std::string item_name)
+      : m_table_handle(table_handle), m_item_name(item_name) {}
 
   auto item_name() -> std::string & { return m_item_name; }
   auto item_name() const -> const std::string & { return m_item_name; }
@@ -38,3 +39,9 @@ struct fmt::formatter<ItemHandle> : fmt::formatter<fmt::string_view> {
   auto format(ItemHandle handle, fmt::format_context &ctx) const
       -> fmt::format_context::iterator;
 };
+
+namespace std {
+template <> struct hash<ItemHandle> {
+  auto operator()(ItemHandle const &s) const noexcept -> size_t;
+};
+}; // namespace std

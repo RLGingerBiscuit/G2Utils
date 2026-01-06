@@ -31,3 +31,9 @@ struct fmt::formatter<DataTableHandle> : fmt::formatter<fmt::string_view> {
   auto format(DataTableHandle handle, fmt::format_context &ctx) const
       -> fmt::format_context::iterator;
 };
+
+namespace std {
+template <> struct hash<DataTableHandle> {
+  auto operator()(DataTableHandle const &s) const noexcept -> size_t;
+};
+}; // namespace std

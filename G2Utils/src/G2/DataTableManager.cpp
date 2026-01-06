@@ -10,6 +10,7 @@
 #include <SDK/SDK/Maine_structs.hpp>
 
 #include "G2/DataTableManager.hpp"
+#include "G2/StringManager.hpp"
 
 SINGLETON_IMPL(DataTableManager);
 
@@ -77,9 +78,9 @@ auto DataTableManager::get_table_info(DataTableHandle handle)
   table_items.reserve(map.Num());
 
   for (const auto &row : map) {
-    auto item_name = row.Key().ToString();
+    auto item_name = String::to_string(row.Key());
     auto *item_data = reinterpret_cast<SDK::FBaseItemData *>(row.Value());
-    auto item_handle = ItemHandle(handle.name(), item_name);
+    auto item_handle = ItemHandle(handle, item_name);
     if (item_data == nullptr) {
       spdlog::warn("'{}' is null", item_handle);
       continue;
@@ -87,5 +88,5 @@ auto DataTableManager::get_table_info(DataTableHandle handle)
     table_items[item_name] = std::move(item_handle);
   }
 
-  return DataTableInfo(handle.name(), table_items);
+  return DataTableInfo(handle, table_items);
 }

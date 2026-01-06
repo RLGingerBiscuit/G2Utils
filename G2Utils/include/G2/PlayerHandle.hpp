@@ -33,3 +33,9 @@ struct fmt::formatter<PlayerHandle> : fmt::formatter<fmt::string_view> {
   auto format(PlayerHandle handle, fmt::format_context &ctx) const
       -> fmt::format_context::iterator;
 };
+
+namespace std {
+template <> struct hash<PlayerHandle> {
+  auto operator()(PlayerHandle const &s) const noexcept -> size_t;
+};
+}; // namespace std
