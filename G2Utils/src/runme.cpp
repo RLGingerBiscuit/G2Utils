@@ -96,8 +96,11 @@ void runme() {
       ImGui::InputInt("Count", &count);
 
       player_list.render();
+      ImGui::Spacing();
       table_list.render();
+      ImGui::Spacing();
       item_list.render();
+      ImGui::Spacing();
 
       if (!can_spawn_item)
         ImGui::BeginDisabled();

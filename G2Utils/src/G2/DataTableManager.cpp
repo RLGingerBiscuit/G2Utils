@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <ranges>
+#include <regex>
 #include <string>
 #include <unordered_map>
 
@@ -51,7 +52,16 @@ auto DataTableManager::refresh() -> void {
       if (display_name.starts_with("Invalid"))
         display_name = item_name;
 
-      table_items[item_name] = ItemInfo(item_handle, display_name);
+      // So colours are `<GlobalColor.ColorName>Text</>`
+      // There are other tags, but items don't currently use any
+      static std::regex colour_tag_regex(R"(<\/?GlobalColor\.[^>]+>(.+?)<\/>)");
+
+      auto description =
+          String::from_locstring(item_data->LocalizedDescription);
+      description = std::regex_replace(description, colour_tag_regex, "$1");
+      // TODO(?): It would be kinda funny to use the current ingame theme
+
+      table_items[item_name] = ItemInfo(item_handle, display_name, description);
     }
 
     m_table_cache[table_handle] =

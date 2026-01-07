@@ -47,12 +47,16 @@ auto ItemList::render() -> void {
       for (auto &handle : m_filtered_items) {
         auto info = ItemManager::get().get_item_info(handle);
         assert(info.has_value());
-        if (ImGui::Selectable(info->display_name().c_str(),
-                              m_selected_item.has_value() &&
-                                  *m_selected_item == handle)) {
+        if (ImGui::Selectable(
+                fmt::format("{}##{}", info->display_name(), info->name())
+                    .c_str(),
+                m_selected_item.has_value() && *m_selected_item == handle)) {
           spdlog::info("Selected item changed to {}", handle.name());
           m_selected_item = handle;
         }
+
+        if (ImGui::IsItemHovered())
+          ImGui::SetTooltip("%s", info->description().c_str());
       }
     }
   }
@@ -63,6 +67,8 @@ auto ItemList::render() -> void {
   if (m_selected_item.has_value()) {
     auto info = ItemManager::get().get_item_info(*m_selected_item);
     ImGui::Text("Selected item: '%s'", info->display_name().c_str());
+    ImGui::TextWrapped("%s", info->description().c_str());
+    // So colours are `<GlobalColor.[ColorName]>Text</>`
   } else {
     ImGui::Text("Selected item: None");
   }
