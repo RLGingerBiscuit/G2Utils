@@ -1,3 +1,3 @@
 #pragma once
 
-void runme();
+auto runme() -> void;

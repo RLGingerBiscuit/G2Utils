@@ -26,7 +26,7 @@ auto ItemManager::refresh() -> void {
     }
   }
 
-  spdlog::info("ItemManager: Cached {} items", names_for_total.size());
+  spdlog::trace("ItemManager: Cached {} items", names_for_total.size());
 }
 
 auto ItemManager::get_all_items() -> std::vector<ItemInfo> {

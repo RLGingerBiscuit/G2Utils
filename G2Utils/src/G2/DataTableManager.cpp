@@ -52,14 +52,10 @@ auto DataTableManager::refresh() -> void {
       if (display_name.starts_with("Invalid"))
         display_name = item_name;
 
-      // So colours are `<GlobalColor.ColorName>Text</>`
-      // There are other tags, but items don't currently use any
-      static std::regex colour_tag_regex(R"(<\/?GlobalColor\.[^>]+>(.+?)<\/>)");
-
+      // static std::regex colour_tag_regex(R"(<\/?GlobalColor\.[^>]+>(.+?)<\/>)");
+      // NOTE: This is rich text
       auto description =
           String::from_locstring(item_data->LocalizedDescription);
-      description = std::regex_replace(description, colour_tag_regex, "$1");
-      // TODO(?): It would be kinda funny to use the current ingame theme
 
       table_items[item_name] = ItemInfo(item_handle, display_name, description);
     }
@@ -68,7 +64,7 @@ auto DataTableManager::refresh() -> void {
         DataTable(table_handle, std::move(table_items));
   }
 
-  spdlog::info("DataTableManager: Cached {} tables", m_table_cache.size());
+  spdlog::trace("DataTableManager: Cached {} tables", m_table_cache.size());
 }
 
 auto DataTableManager::get_all_tables() -> std::vector<DataTable> {

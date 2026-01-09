@@ -1,0 +1,127 @@
+#pragma once
+
+#include <array>
+
+#define THEME_COLOR_TABLE()                                                    \
+  X(SCABosBase)                                                                \
+  X(SCABosAccentOne)                                                           \
+  X(SCABOSAccentTwo)                                                           \
+  X(SCABOSAccentThree)                                                         \
+  X(SCABOSWarningOne)                                                          \
+  X(ResourceButton)                                                            \
+  X(ResourceButtonSelectedEnabled)                                             \
+  X(ResourceAccent)                                                            \
+  X(CraftableButtonEnabled)                                                    \
+  X(CraftableButtonSelectedEnabled)                                            \
+  X(CraftableButtonSelectedDisabled)                                           \
+  X(CraftableAccentEnabled)                                                    \
+  X(CraftableButtonDisabled)                                                   \
+  X(CraftableAccentDisabled)                                                   \
+  X(BuildingButtonEnabled)                                                     \
+  X(BuildingButtonSelectedEnabled)                                             \
+  X(BuildingAccentEnabled)                                                     \
+  X(BuildingButtonDisabled)                                                    \
+  X(BuildingAccentDisabled)                                                    \
+  X(BottomButton)                                                              \
+  X(BottomButtonDisabled)                                                      \
+  X(Selecting)                                                                 \
+  X(Selected)                                                                  \
+  X(Food)                                                                      \
+  X(Health)                                                                    \
+  X(Water)                                                                     \
+  X(Stamina)                                                                   \
+  X(Energy)                                                                    \
+  X(XP)                                                                        \
+  X(BasicText)                                                                 \
+  X(HeaderText)                                                                \
+  X(SubheaderText)                                                             \
+  X(DisabledText)                                                              \
+  X(GlobalBG)                                                                  \
+  X(Augusta_BgBannerDark)                                                      \
+  X(GamepadAttachedBtnBGFadeout)                                               \
+  X(ButtonBGAccent)                                                            \
+  X(Attention)                                                                 \
+  X(LoseResource)                                                              \
+  X(GainResource)                                                              \
+  X(TabButtonCheckedText)                                                      \
+  X(TabButtonUncheckedText)                                                    \
+  X(ButtonUpText)                                                              \
+  X(ButtonOverText)                                                            \
+  X(ButtonDisabledText)                                                        \
+  X(Durability)                                                                \
+  X(Power)                                                                     \
+  X(MaterialA)                                                                 \
+  X(MaterialB)                                                                 \
+  X(BottomButtonOver)                                                          \
+  X(SelectedButtonTextOver)                                                    \
+  X(Interact)                                                                  \
+  X(HighContrastBG)                                                            \
+  X(HeatMapPositive)                                                           \
+  X(HeatMapNegative)                                                           \
+  X(InvisibleElementA)                                                         \
+  X(InvisibleElementB)                                                         \
+  X(Augusta_InventoryGearText)                                                 \
+  X(Augusta_SCABLogoColor)                                                     \
+  X(Augusta_SCABTabSelected)                                                   \
+  X(Augusta_SCABTabNormal)                                                     \
+  X(Augusta_StrokeBanner)                                                      \
+  X(Augusta_StatsBarNormal)                                                    \
+  X(Augusta_StatsBarHighlight)                                                 \
+  X(Augusta_Rarity01)                                                          \
+  X(Augusta_Rarity02)                                                          \
+  X(Augusta_Rarity03)                                                          \
+  X(Augusta_Rarity04)                                                          \
+  X(Augusta_MainSelectorBg)                                                    \
+  X(Augusta_MainSelectorGradient)                                              \
+  X(Augusta_MainSelectorBevel)                                                 \
+  X(Augusta_MainSelectorOutline)                                               \
+  X(Augusta_MainSelectorBlur)                                                  \
+  X(Augusta_BgBannerLight)                                                     \
+  X(Augusta_BgBannerEffects)                                                   \
+  X(Augusta_BgTram)                                                            \
+  X(Augusta_GlobalPositiveColor)                                               \
+  X(Augusta_GlobalNegativeColor)                                               \
+  X(Augusta_InventoryGearOutlineText)                                          \
+  X(Augusta_TooltipColor)                                                      \
+  X(Augusta_TooltipColorDisabled)                                              \
+  X(Augusta_PersonalMilkMolar)                                                 \
+  X(Augusta_PartyMilkMolar)                                                    \
+  X(Augusta_OminentMainBG)                                                     \
+  X(Augusta_OminentBackgroundSlot)                                             \
+  X(Augusta_OminentForegroundSlot)                                             \
+  X(Augusta_OminentBlack)                                                      \
+  X(Augusta_OminentRed)                                                        \
+  X(Augusta_OminentWhite)                                                      \
+  X(Augusta_OminentSelectorBg)                                                 \
+  X(Augusta_OminentSelectorGradient)                                           \
+  X(Augusta_OminentSelectorBevel)                                              \
+  X(Augusta_OminentSelectorOutline)                                            \
+  X(Augusta_OminentSelectorBlur)                                               \
+  X(Augusta_OminentBgBannerDark)                                               \
+  X(Augusta_OminentBgBannerLight)                                              \
+  X(Augusta_OminentPanelSelectionBg)                                           \
+  X(Augusta_OminentButtonHover)                                                \
+  X(Augusta_PanelSelectionBg)                                                  \
+  X(Augusta_MapColorBg)                                                        \
+  X(Augusta_MapColorMarker)                                                    \
+  X(Augusta_MapColorScanner)                                                   \
+  X(Augusta_OminentYellow)                                                     \
+  X(Augusta_Subject_V)                                                         \
+  X(Augusta_OminentInsideSlot)                                                 \
+  X(Augusta_MetaMenusMainBG)                                                   \
+  X(Augusta_MetaMenusBgBannerLight)                                            \
+  X(Augusta_MetaMenusBgScrollBar)                                              \
+  X(Augusta_MetaMenusBgBottomButton)                                           \
+  X(Augusta_MetaMenusBgBottomButtonOver)                                       \
+  X(Augusta_MetaMenusBackgroundSlot)                                           \
+  X(Augusta_MetaMenusForegroundSlot)                                           \
+  X(Augusta_MetaMenusBlueSlotBackground)                                       \
+  X(Augusta_MetaMenusBlueSlotForeground)                                       \
+  X(Augusta_MetaMenusBgPopups)                                                 \
+  X(Augusta_BgPopups)
+
+struct Theme final {
+#define X(name) std::array<float, 4> name;
+  THEME_COLOR_TABLE()
+#undef X
+};

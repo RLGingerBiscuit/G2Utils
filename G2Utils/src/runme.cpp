@@ -14,6 +14,7 @@
 #include "G2/ItemManager.hpp"
 #include "G2/PlayerManager.hpp"
 #include "G2/StringManager.hpp"
+#include "G2/ThemeManager.hpp"
 #include "defer.hpp"
 
 #include "UI/ItemList.hpp"
@@ -21,15 +22,16 @@
 #include "UI/TableList.hpp"
 #include "UI/Window.hpp"
 
-void init_loggers();
-void deinit_loggers();
+auto init_loggers() -> void;
+auto deinit_loggers() -> void;
 
-void runme() {
+auto runme() -> void {
   ConsoleManager::init();
-  defer(ConsoleManager::deinit());
 
   init_loggers();
   defer(deinit_loggers());
+
+  defer(ConsoleManager::deinit());
 
   spdlog::info("Hello from the dll pickle!");
 
@@ -47,6 +49,9 @@ void runme() {
 
   ItemManager::init();
   defer(ItemManager::deinit());
+
+  ThemeManager::init();
+  defer(ThemeManager::deinit());
 
   auto &console = ConsoleManager::get();
   auto &config = ConfigManager::get().config();
@@ -69,18 +74,20 @@ void runme() {
           console.hide();
       }
 
+#if !NDEBUG
       // NOTE: This is here because the game doesn't quite close properly
       // sometimes (EA amirite?).
       //       It's simply quicker to crash the game than force close it.
       if (ImGui::Button("Force Crash")) {
         *((volatile uint64_t *)0) = 34 + 35;
       }
+#endif
     }
     ImGui::End();
 
     if (ImGui::Begin("Item Spawner")) {
       if (ImGui::Button("Refresh")) {
-        player_list.refresh();
+        player_list.refresh(); // TODO: refresh players as they join/leave
         table_list.refresh();
         item_list.refresh();
       }
@@ -121,7 +128,7 @@ void runme() {
   }
 }
 
-void init_loggers() {
+auto init_loggers() -> void {
   const auto console_sink =
       std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
   console_sink->set_level(spdlog::level::info);
@@ -139,7 +146,7 @@ void init_loggers() {
   spdlog::info("Log path: '{}'", file_sink->filename());
 }
 
-void deinit_loggers() {
+auto deinit_loggers() -> void {
   spdlog::info("Exiting...");
   spdlog::default_logger()->flush();
   spdlog::shutdown();

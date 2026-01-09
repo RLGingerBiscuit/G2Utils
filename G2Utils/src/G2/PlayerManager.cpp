@@ -62,7 +62,7 @@ auto PlayerManager::refresh() -> void {
     m_player_cache.push_back(handle);
   }
 
-  spdlog::info("PlayerManager: Cached {} players", m_player_cache.size());
+  spdlog::trace("PlayerManager: Cached {} players", m_player_cache.size());
 }
 
 auto PlayerManager::is_valid_player(const PlayerHandle &handle) -> bool {

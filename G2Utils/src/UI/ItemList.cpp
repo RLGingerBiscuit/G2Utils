@@ -12,6 +12,8 @@
 #include "G2/DataTableManager.hpp"
 #include "G2/ItemInfo.hpp"
 #include "G2/ItemManager.hpp"
+#include "G2/ThemeManager.hpp"
+#include "UI/RichText.hpp"
 #include "defer.hpp"
 
 auto ItemList::refresh() -> void {
@@ -55,8 +57,12 @@ auto ItemList::render() -> void {
           m_selected_item = handle;
         }
 
-        if (ImGui::IsItemHovered())
-          ImGui::SetTooltip("%s", info->description().c_str());
+        if (ImGui::BeginItemTooltip()) {
+          defer(ImGui::EndTooltip());
+
+          UI::OEIRichText(info->description().c_str(),
+                          ThemeManager::get().theme());
+        }
       }
     }
   }
@@ -67,8 +73,7 @@ auto ItemList::render() -> void {
   if (m_selected_item.has_value()) {
     auto info = ItemManager::get().get_item_info(*m_selected_item);
     ImGui::Text("Selected item: '%s'", info->display_name().c_str());
-    ImGui::TextWrapped("%s", info->description().c_str());
-    // So colours are `<GlobalColor.[ColorName]>Text</>`
+    UI::OEIRichText(info->description().c_str(), ThemeManager::get().theme());
   } else {
     ImGui::Text("Selected item: None");
   }
