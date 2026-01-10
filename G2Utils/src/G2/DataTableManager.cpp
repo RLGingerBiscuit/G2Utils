@@ -2,7 +2,6 @@
 
 #include <cstdint>
 #include <ranges>
-#include <regex>
 #include <string>
 #include <unordered_map>
 
@@ -47,17 +46,21 @@ auto DataTableManager::refresh() -> void {
         spdlog::warn("'{}' is null", item_handle);
         continue;
       }
+
+      auto &equippable_data = item_data->EquippableData;
+
       auto display_name =
           String::from_locstring(item_data->LocalizedDisplayName);
       if (display_name.starts_with("Invalid"))
         display_name = item_name;
 
-      // static std::regex colour_tag_regex(R"(<\/?GlobalColor\.[^>]+>(.+?)<\/>)");
-      // NOTE: This is rich text
       auto description =
           String::from_locstring(item_data->LocalizedDescription);
 
-      table_items[item_name] = ItemInfo(item_handle, display_name, description);
+      auto tier = item_data->Tier;
+
+      table_items[item_name] =
+          ItemInfo(item_handle, display_name, description, tier);
     }
 
     m_table_cache[table_handle] =

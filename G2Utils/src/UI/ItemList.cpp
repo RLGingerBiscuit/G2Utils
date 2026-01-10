@@ -72,8 +72,39 @@ auto ItemList::render() -> void {
 
   if (m_selected_item.has_value()) {
     auto info = ItemManager::get().get_item_info(*m_selected_item);
-    ImGui::Text("Selected item: '%s'", info->display_name().c_str());
+
+    switch (info->tier()) {
+    case 1:
+      ImGui::Text("I");
+      break;
+    case 2:
+      ImGui::Text("II");
+      break;
+    case 3:
+      ImGui::Text("III");
+      break;
+    case 4:
+      ImGui::Text("IV");
+      break;
+    case 5:
+      ImGui::Text("V");
+      break;
+    }
+
+    if (info->tier() > 0)
+      ImGui::SameLine();
+
+    ImGui::Text("%s", info->display_name().c_str());
+
+    ImGui::SameLine();
+    ImGui::PushStyleColor(ImGuiCol_Text,
+                          ImGui::GetStyleColorVec4(ImGuiCol_TextDisabled));
+    ImGui::Text(" (%s)", info->name().c_str());
+    ImGui::PopStyleColor();
+
     UI::OEIRichText(info->description().c_str(), ThemeManager::get().theme());
+
+    // TODO? Damage types/status effects/literally every stat???
   } else {
     ImGui::Text("Selected item: None");
   }
