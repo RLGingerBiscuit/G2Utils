@@ -1,0 +1,72 @@
+diff --git a/SDK-GRTS/SDK/Assertions.inl b/SDK-GRTS/SDK/Assertions.inl
+index c98c5be..ed57bd4 100644
+--- a/SDK-GRTS/SDK/Assertions.inl
++++ b/SDK-GRTS/SDK/Assertions.inl
+@@ -269964,9 +269964,9 @@ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, Temp_real
+ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, Temp_real_Variable_1_0) == 0x0000D0, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::Temp_real_Variable_1_0' has a wrong offset!"); \
+ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, Temp_real_Variable_1_1) == 0x0000D8, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::Temp_real_Variable_1_1' has a wrong offset!"); \
+ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, Temp_real_Variable_1_2) == 0x0000E0, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::Temp_real_Variable_1_2' has a wrong offset!"); \
+-static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, Temp_real_Variable_1) == 0x0000E8, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::Temp_real_Variable_1' has a wrong offset!"); \
++static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, Temp_real_Variable_1_3) == 0x0000E8, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::Temp_real_Variable_1_3' has a wrong offset!"); \
+ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, Temp_real_Variable_2) == 0x0000F0, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::Temp_real_Variable_2' has a wrong offset!"); \
+-static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, Temp_real_Variable_2) == 0x0000F8, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::Temp_real_Variable_2' has a wrong offset!"); \
++static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, Temp_real_Variable_2_0) == 0x0000F8, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::Temp_real_Variable_2_0' has a wrong offset!"); \
+ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, CallFunc_Greater_DoubleDouble_ReturnValue) == 0x000100, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::CallFunc_Greater_DoubleDouble_ReturnValue' has a wrong offset!"); \
+ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, CallFunc_GetOwningPlayerPawn_ReturnValue) == 0x000108, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::CallFunc_GetOwningPlayerPawn_ReturnValue' has a wrong offset!"); \
+ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, K2Node_Event_MyGeometry) == 0x000110, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::K2Node_Event_MyGeometry' has a wrong offset!"); \
+@@ -269981,7 +269981,7 @@ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, K2Node_En
+ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, K2Node_EnhancedInputActionEvent_TriggeredTime_3) == 0x00019C, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::K2Node_EnhancedInputActionEvent_TriggeredTime_3' has a wrong offset!"); \
+ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, K2Node_EnhancedInputActionEvent_SourceAction_3) == 0x0001A0, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::K2Node_EnhancedInputActionEvent_SourceAction_3' has a wrong offset!"); \
+ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, Temp_real_Variable_3) == 0x0001A8, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::Temp_real_Variable_3' has a wrong offset!"); \
+-static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, Temp_real_Variable_1_3) == 0x0001B0, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::Temp_real_Variable_1_3' has a wrong offset!"); \
++static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, Temp_real_Variable_1_4) == 0x0001B0, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::Temp_real_Variable_1_4' has a wrong offset!"); \
+ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, CallFunc_Conv_InputActionValueToAxis1D_ReturnValue_3) == 0x0001B8, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::CallFunc_Conv_InputActionValueToAxis1D_ReturnValue_3' has a wrong offset!"); \
+ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, CallFunc_GetOwningPlayerPawn_ReturnValue_1) == 0x0001C0, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::CallFunc_GetOwningPlayerPawn_ReturnValue_1' has a wrong offset!"); \
+ static_assert(offsetof(WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR, K2Node_DynamicCast_AsSurvival_Character_1) == 0x0001C8, "Member 'WBP_HUD_PEEPR_C_ExecuteUbergraph_WBP_HUD_PEEPR::K2Node_DynamicCast_AsSurvival_Character_1' has a wrong offset!"); \
+diff --git a/SDK-GRTS/SDK/SDK/OEIOnlineSubsystemUtils_structs.hpp b/SDK-GRTS/SDK/SDK/OEIOnlineSubsystemUtils_structs.hpp
+index 146b207..b7fe699 100644
+--- a/SDK-GRTS/SDK/SDK/OEIOnlineSubsystemUtils_structs.hpp
++++ b/SDK-GRTS/SDK/SDK/OEIOnlineSubsystemUtils_structs.hpp
+@@ -91,7 +91,7 @@ DUMPER7_ASSERTS_FName_NetCrc32;
+ 
+ // ScriptStruct OEIOnlineSubsystemUtils.DataTableRowHandle_NetCrc32
+ // 0x0020 (0x0030 - 0x0010)
+-struct FDataTableRowHandle_NetCrc32 final : public FDataTableRowHandle
++struct FDataTableRowHandle_NetCrc32 final
+ {
+ public:
+ 	struct FDataTableRowHandle                    DataTableRowHandle;                                // 0x0000(0x0010)(BlueprintVisible, BlueprintReadOnly, Transient, NoDestructor, NativeAccessSpecifierPublic)
+@@ -101,7 +101,7 @@ DUMPER7_ASSERTS_FDataTableRowHandle_NetCrc32;
+ 
+ // ScriptStruct OEIOnlineSubsystemUtils.DataTableRowHandle_NetCrc64
+ // 0x0028 (0x0038 - 0x0010)
+-struct FDataTableRowHandle_NetCrc64 final : public FDataTableRowHandle
++struct FDataTableRowHandle_NetCrc64 final
+ {
+ public:
+ 	struct FDataTableRowHandle                    DataTableRowHandle;                                // 0x0000(0x0010)(BlueprintVisible, BlueprintReadOnly, Transient, NoDestructor, NativeAccessSpecifierPublic)
+diff --git a/SDK-GRTS/SDK/SDK/WBP_HUD_PEEPR_parameters.hpp b/SDK-GRTS/SDK/SDK/WBP_HUD_PEEPR_parameters.hpp
+index 41adac6..469c0b0 100644
+--- a/SDK-GRTS/SDK/SDK/WBP_HUD_PEEPR_parameters.hpp
++++ b/SDK-GRTS/SDK/SDK/WBP_HUD_PEEPR_parameters.hpp
+@@ -114,9 +114,9 @@ public:
+ 	double                                        Temp_real_Variable_1_0;                            // 0x00D0(0x0008)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+ 	double                                        Temp_real_Variable_1_1;                            // 0x00D8(0x0008)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+ 	double                                        Temp_real_Variable_1_2;                            // 0x00E0(0x0008)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+-	double                                        Temp_real_Variable_1;                              // 0x00E8(0x0008)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
++	double                                        Temp_real_Variable_1_3;                              // 0x00E8(0x0008)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+ 	double                                        Temp_real_Variable_2;                              // 0x00F0(0x0008)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+-	double                                        Temp_real_Variable_2;                              // 0x00F8(0x0008)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
++	double                                        Temp_real_Variable_2_0;                              // 0x00F8(0x0008)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+ 	bool                                          CallFunc_Greater_DoubleDouble_ReturnValue;         // 0x0100(0x0001)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+ 	uint8                                         Pad_101[0x7];                                      // 0x0101(0x0007)(Fixing Size After Last Property [ Dumper-7 ])
+ 	class APawn*                                  CallFunc_GetOwningPlayerPawn_ReturnValue;          // 0x0108(0x0008)(ZeroConstructor, NoDestructor, HasGetValueTypeHash)
+@@ -135,7 +135,7 @@ public:
+ 	float                                         K2Node_EnhancedInputActionEvent_TriggeredTime_3;   // 0x019C(0x0004)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+ 	const class UInputAction*                     K2Node_EnhancedInputActionEvent_SourceAction_3;    // 0x01A0(0x0008)(ConstParm, ZeroConstructor, NoDestructor, HasGetValueTypeHash)
+ 	double                                        Temp_real_Variable_3;                              // 0x01A8(0x0008)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+-	double                                        Temp_real_Variable_1_3;                            // 0x01B0(0x0008)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
++	double                                        Temp_real_Variable_1_4;                            // 0x01B0(0x0008)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+ 	double                                        CallFunc_Conv_InputActionValueToAxis1D_ReturnValue_3; // 0x01B8(0x0008)(ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+ 	class APawn*                                  CallFunc_GetOwningPlayerPawn_ReturnValue_1;        // 0x01C0(0x0008)(ZeroConstructor, NoDestructor, HasGetValueTypeHash)
+ 	class ASurvivalCharacter*                     K2Node_DynamicCast_AsSurvival_Character_1;         // 0x01C8(0x0008)(ZeroConstructor, NoDestructor, HasGetValueTypeHash)

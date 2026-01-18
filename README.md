@@ -9,7 +9,7 @@ We use [Xmake](https://xmake.io/) to build, so you'll need to install that with 
 ### Acquiring an SDK
 
 You'll need to clone [Dumper-7](https://github.com/Encryqed/Dumper-7) and apply the patch
-`misc/patches/dumper7_fix_data_table_row_handle.patch` to work around a known bug for some games. Build a copy using the
+`misc/patches/dumper7.patch` to work around a known bug for some games. Build a copy using the
 instructions in that repo.
 
 Run `xmake config --dumper7=y` to make set up the injector for Dumper-7, and copy Dumper-7.dll to the output folder
@@ -20,8 +20,8 @@ took ..._'.
 The output should be, by default, in `C:\Dumper-7`. Go in to the folder that was created, and copy the _contents_ of
 `CppSDK` into either `SDK-GRTS/SDK` (if using the steam version), or `SDK-GDK/SDK` (if using the gamepass version).
 
-Finally, depending on the version of your game, apply `misc/patches/sdk-{grts/gdk}_fix_data_table_row_handle.patch` to
-fix an issue with the outputted SDK.
+Finally, depending on the version of your game, apply `misc/patches/sdk-{grts/gdk}.patch` to
+fix a couple issues with the outputted SDK.
 
 ### Building G2Utils
 

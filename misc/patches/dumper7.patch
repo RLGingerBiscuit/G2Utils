@@ -1,0 +1,18 @@
+diff --git a/Dumper/Generator/Private/Managers/StructManager.cpp b/Dumper/Generator/Private/Managers/StructManager.cpp
+index f3f106a..b37651d 100644
+--- a/Dumper/Generator/Private/Managers/StructManager.cpp
++++ b/Dumper/Generator/Private/Managers/StructManager.cpp
+@@ -256,6 +256,13 @@ void StructManager::Init()
+ 	InitAlignmentsAndNames();
+ 	InitSizesAndIsFinal();
+ 
++	/* Fix FDataTableRowHandle */
++	if (const UEObject FDataTableRowHandleClass = ObjectArray::FindStructFast("DataTableRowHandle")) {
++		StructInfo* Info = &StructInfoOverrides[FDataTableRowHandleClass.GetIndex()];
++		Info->Size = 0x10;
++		Info->Alignment = 0x8;
++	}
++
+ 	/* 
+ 	* The default class-alignment of 0x8 is only set for classes with a valid Super-class, because they inherit from UObject. 
+ 	* UObject however doesn't have a super, so this needs to be set manually.
