@@ -41,6 +41,7 @@ auto ConsoleManager::init_singleton() -> void {
 }
 
 auto ConsoleManager::deinit_singleton() -> void {
+  hide();
   FreeConsole();
   if (this->m_console == GetConsoleWindow() && IsWindow(CONSOLE_WINDOW())) {
     PostMessage(CONSOLE_WINDOW(), WM_CLOSE, 0, 0);
