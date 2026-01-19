@@ -26,7 +26,7 @@ auto TableList::render() -> void {
       if (ImGui::Selectable(handle.name().c_str(),
                             m_selected_table.has_value() &&
                                 *m_selected_table == handle)) {
-        spdlog::info("Selected table changed to {}", handle);
+        spdlog::debug("Selected table changed to {}", handle);
         m_selected_table = handle;
       }
     }

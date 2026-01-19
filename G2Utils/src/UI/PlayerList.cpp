@@ -25,7 +25,7 @@ auto PlayerList::render() -> void {
       if (ImGui::Selectable(fmt::format("{}", handle).c_str(),
                             m_selected_player.has_value() &&
                                 m_selected_player->id() == handle.id())) {
-        spdlog::info("Selected player changed to {}", handle);
+        spdlog::debug("Selected player changed to {}", handle);
         m_selected_player = handle;
       }
     }

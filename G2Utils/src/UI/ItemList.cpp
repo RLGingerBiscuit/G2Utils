@@ -53,7 +53,7 @@ auto ItemList::render() -> void {
                 fmt::format("{}##{}", info->display_name(), info->name())
                     .c_str(),
                 m_selected_item.has_value() && *m_selected_item == handle)) {
-          spdlog::info("Selected item changed to {}", handle.name());
+          spdlog::debug("Selected item changed to {}", handle.name());
           m_selected_item = handle;
         }
 

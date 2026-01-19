@@ -153,7 +153,7 @@ auto init_loggers() -> void {
   file_sink->set_level(spdlog::level::trace);
 
   const auto logger = std::make_shared<spdlog::logger>(
-      "", spdlog::sinks_init_list{console_sink, file_sink});
+      "G2Utils", spdlog::sinks_init_list{console_sink, file_sink});
   spdlog::set_default_logger(logger);
 
   spdlog::info("Log path: '{}'", log_path);
