@@ -28,6 +28,13 @@ struct ItemHandle final {
   auto operator!=(const ItemHandle &x) -> bool { return !(*this == x); }
   auto operator!=(const ItemHandle &x) const -> bool { return !(*this == x); }
 
+  auto operator<(const ItemHandle &x) const -> bool {
+    return m_name < x.m_name;
+  }
+  auto operator>(const ItemHandle &x) const -> bool {
+    return m_name > x.m_name;
+  }
+
 private:
   DataTableHandle m_table;
   std::string m_name;

@@ -1,0 +1,12 @@
+{
+  "lsp": {
+    "lua-language-server": {
+      "settings": {
+        "Lua.workspace.library": ["${addons}/xmake/module/library"],
+        "Lua.runtime.version": "LuaJIT",
+        "Lua.workspace.checkThirdParty": false,
+        "Lua.diagnostics.disable": ["missing-fields"],
+      },
+    },
+  },
+}

@@ -30,5 +30,5 @@ public:
       -> std::optional<DataTable>;
 
 private:
-  std::unordered_map<DataTableHandle, DataTable> m_table_cache;
+  std::map<DataTableHandle, DataTable> m_table_cache;
 };

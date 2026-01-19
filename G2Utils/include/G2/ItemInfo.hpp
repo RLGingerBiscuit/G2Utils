@@ -28,6 +28,9 @@ struct ItemInfo final {
   auto description() -> std::string & { return m_description; }
   auto description() const -> const std::string & { return m_description; }
 
+  auto plain_description() -> std::string &;
+  auto plain_description() const -> const std::string &;
+
   auto tier() -> int { return m_tier; }
   auto tier() const -> const int { return m_tier; }
 
@@ -35,6 +38,7 @@ private:
   ItemHandle m_handle;
   std::string m_display_name;
   std::string m_description;
+  std::optional<std::string> m_plain_description;
 
   int m_tier;
 };

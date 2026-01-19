@@ -8,6 +8,7 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
+#include "Dump/DataTableDumper.hpp"
 #include "G2/ConfigManager.hpp"
 #include "G2/ConsoleManager.hpp"
 #include "G2/DataTableManager.hpp"
@@ -26,20 +27,20 @@ auto init_loggers() -> void;
 auto deinit_loggers() -> void;
 
 auto runme() -> void {
-  ConsoleManager::init();
-
-  init_loggers();
   defer(deinit_loggers());
 
+  ConsoleManager::init();
   defer(ConsoleManager::deinit());
+
+  ConfigManager::init();
+  defer(ConfigManager::deinit());
+
+  init_loggers();
 
   spdlog::info("Hello from the dll pickle!");
 
   StringManager::init();
   defer(StringManager::deinit());
-
-  ConfigManager::init();
-  defer(ConfigManager::deinit());
 
   PlayerManager::init();
   defer(PlayerManager::deinit());
@@ -74,31 +75,43 @@ auto runme() -> void {
           console.hide();
       }
 
-#if !NDEBUG
-      // NOTE: This is here because the game doesn't quite close properly
-      // sometimes (EA amirite?).
-      //       It's simply quicker to crash the game than force close it.
-      if (ImGui::Button("Force Crash")) {
-        *((volatile uint64_t *)0) = 34 + 35;
-      }
-#endif
-    }
-    ImGui::End();
-
-    if (ImGui::Begin("Item Spawner")) {
       if (ImGui::Button("Refresh")) {
         player_list.refresh(); // TODO: refresh players as they join/leave
         table_list.refresh();
         item_list.refresh();
       }
+    }
+    ImGui::End();
 
+    if (ImGui::Begin("Debug")) {
+      const auto &selected_table = table_list.selected_table();
+      if (!selected_table)
+        ImGui::BeginDisabled();
+      if (ImGui::Button("Dump")) {
+        auto dumper = DataTableDumper(*selected_table);
+        dumper.dump();
+      }
+      if (!selected_table)
+        ImGui::EndDisabled();
+
+      if (ImGui::Button("Dump All Tables")) {
+        DataTableDumper::dump_all();
+      }
+
+#if !NDEBUG
+      if (ImGui::Button("Force Crash")) {
+        *((volatile uint64_t *)0) = 34 + 35;
+      }
+    }
+#endif
+    ImGui::End();
+
+    if (ImGui::Begin("Item Spawner")) {
       auto can_spawn_item = player_list.selected_player().has_value() &&
                             table_list.selected_table().has_value() &&
                             item_list.selected_item().has_value();
 
       static int count = 1;
-
-      ImGui::SameLine();
 
       ImGui::InputInt("Count", &count);
 
@@ -133,17 +146,17 @@ auto init_loggers() -> void {
       std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
   console_sink->set_level(spdlog::level::info);
 
+  const auto log_path = ConfigManager::get().log_path() / "log.txt";
+
   const auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-      "g2utils/logs/log.txt", 5 * (1 << 20), 5);
+      log_path.string(), 5 * (1 << 20), 5);
   file_sink->set_level(spdlog::level::trace);
 
   const auto logger = std::make_shared<spdlog::logger>(
       "", spdlog::sinks_init_list{console_sink, file_sink});
   spdlog::set_default_logger(logger);
 
-  const auto log_path = std::filesystem::canonical(file_sink->filename());
-
-  spdlog::info("Log path: '{}'", file_sink->filename());
+  spdlog::info("Log path: '{}'", log_path);
 }
 
 auto deinit_loggers() -> void {

@@ -34,12 +34,12 @@ public:
     assert(m_instance == nullptr);
     m_instance = std::make_unique<T>();
     m_instance.get()->init_singleton();
-    spdlog::info("Initialised '{}'", typeid(T).name());
+    spdlog::debug("Initialised '{}'", typeid(T).name());
   }
 
   static auto deinit() -> void {
     assert(m_instance != nullptr);
-    spdlog::info("Deinitialising '{}'", typeid(T).name());
+    spdlog::debug("Deinitialising '{}'", typeid(T).name());
     m_instance.get()->deinit_singleton();
     m_instance = nullptr;
   }

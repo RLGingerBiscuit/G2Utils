@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <ranges>
 #include <string>
-#include <unordered_map>
+#include <map>
 
 #include <spdlog/spdlog.h>
 
@@ -35,8 +35,7 @@ auto DataTableManager::refresh() -> void {
 
     auto &map = table->RowMap;
 
-    std::unordered_map<std::string, ItemInfo> table_items;
-    table_items.reserve(map.Num());
+    std::map<std::string, ItemInfo> table_items;
 
     for (const auto &row : map) {
       auto item_name = String::to_string(row.Key());

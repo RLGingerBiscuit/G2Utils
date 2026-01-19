@@ -23,6 +23,13 @@ struct DataTableHandle final {
     return !(*this == x);
   }
 
+  auto operator<(const DataTableHandle &x) const -> bool {
+    return m_name < x.m_name;
+  }
+  auto operator>(const DataTableHandle &x) const -> bool {
+    return m_name > x.m_name;
+  }
+
 private:
   std::string m_name;
 };
